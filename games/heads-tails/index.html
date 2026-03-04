@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Heads or Tails Predictor</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;display:flex;justify-content:center;align-items:center;height:100vh;background:#ecfeff}
+.card{background:white;padding:30px;border-radius:10px;width:300px;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,0.1)}
+button{padding:10px 15px;margin:5px;border:none;background:#0ea5e9;color:white;border-radius:6px;cursor:pointer}
+.restart{background:#333;margin-top:10px}
+.score{margin-top:10px}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Heads or Tails Predictor</h2>
+
+<button onclick="predict('Heads')">Heads</button>
+<button onclick="predict('Tails')">Tails</button>
+
+<div id="result"></div>
+
+<div class="score">Score: <span id="score">0</span></div>
+
+<button class="restart" onclick="restart()">Restart</button>
+
+</div>
+
+<script>
+
+let score=0;
+
+function predict(choice){
+
+let result=Math.random()<0.5?"Heads":"Tails";
+
+if(choice===result){
+score++;
+document.getElementById("result").textContent="Result: "+result+" ✔ Correct!";
+}
+else{
+score=0;
+document.getElementById("result").textContent="Result: "+result+" ❌ Wrong!";
+}
+
+document.getElementById("score").textContent=score;
+
+}
+
+function restart(){
+score=0;
+document.getElementById("score").textContent=0;
+document.getElementById("result").textContent="";
+}
+
+</script>
+
+</body>
+</html>

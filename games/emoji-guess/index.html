@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Emoji Guess Game</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;display:flex;justify-content:center;align-items:center;height:100vh;background:#fef9c3}
+.card{background:white;padding:30px;border-radius:10px;width:320px;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,0.1)}
+.emoji{font-size:50px;margin:20px 0}
+button{padding:10px;margin:5px;border:none;background:#f59e0b;color:white;border-radius:6px;cursor:pointer}
+.restart{background:#333;margin-top:10px}
+.score{margin-top:10px}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Emoji Guess</h2>
+
+<div class="emoji" id="emoji"></div>
+
+<div id="options"></div>
+
+<div id="result"></div>
+
+<div class="score">Score: <span id="score">0</span></div>
+
+<button class="restart" onclick="start()">Restart</button>
+
+</div>
+
+<script>
+
+let data=[
+{emoji:"🍎",answer:"Apple",options:["Apple","Car","Ball"]},
+{emoji:"🐶",answer:"Dog",options:["Dog","Cat","Lion"]},
+{emoji:"⚽",answer:"Football",options:["Football","Basketball","Cricket"]},
+{emoji:"🚗",answer:"Car",options:["Bike","Car","Bus"]}
+];
+
+let score=0;
+let current;
+
+function start(){
+
+current=data[Math.floor(Math.random()*data.length)];
+
+document.getElementById("emoji").textContent=current.emoji;
+
+let optionsDiv=document.getElementById("options");
+optionsDiv.innerHTML="";
+
+current.options.forEach(opt=>{
+let btn=document.createElement("button");
+btn.textContent=opt;
+
+btn.onclick=function(){
+
+if(opt===current.answer){
+score++;
+document.getElementById("result").textContent="Correct!";
+}else{
+score=0;
+document.getElementById("result").textContent="Wrong!";
+}
+
+document.getElementById("score").textContent=score;
+
+};
+
+optionsDiv.appendChild(btn);
+});
+
+}
+
+start();
+
+</script>
+
+</body>
+</html>

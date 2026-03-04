@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Even or Odd Game</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;display:flex;justify-content:center;align-items:center;height:100vh;background:#eef2ff}
+.card{background:white;padding:30px;border-radius:10px;width:320px;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,0.1)}
+button{padding:10px 15px;margin:5px;border:none;background:#6366f1;color:white;border-radius:6px;cursor:pointer}
+.restart{background:#333;margin-top:10px}
+.score{margin-top:10px}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Even or Odd Game</h2>
+
+<button onclick="guess('even')">Even</button>
+<button onclick="guess('odd')">Odd</button>
+
+<div id="result"></div>
+
+<div class="score">Score: <span id="score">0</span></div>
+
+<button class="restart" onclick="restart()">Restart</button>
+
+</div>
+
+<script>
+
+let score=0;
+
+function guess(choice){
+
+let number=Math.floor(Math.random()*100)+1;
+let result=(number%2===0)?"even":"odd";
+
+if(choice===result){
+score++;
+document.getElementById("result").textContent="Number: "+number+" ✔ Correct!";
+}
+else{
+score=0;
+document.getElementById("result").textContent="Number: "+number+" ❌ Wrong!";
+}
+
+document.getElementById("score").textContent=score;
+
+}
+
+function restart(){
+score=0;
+document.getElementById("score").textContent=0;
+document.getElementById("result").textContent="";
+}
+
+</script>
+
+</body>
+</html>

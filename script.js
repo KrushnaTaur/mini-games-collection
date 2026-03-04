@@ -33,6 +33,41 @@ name:"Coin Flip Game",
 icon:"🪙",
 desc:"Flip a coin and see heads or tails.",
 link:"./games/coin-flip/index.html"
+},
+
+{
+name:"Rock Paper Scissors",
+icon:"✊",
+desc:"Play Rock Paper Scissors vs computer.",
+link:"./games/rock-paper-scissors/index.html"
+},
+
+{
+name:"Even or Odd Game",
+icon:"🔢",
+desc:"Guess if the number will be even or odd.",
+link:"./games/even-odd/index.html"
+},
+
+{
+name:"Heads or Tails Predictor",
+icon:"🪙",
+desc:"Predict heads or tails before flip.",
+link:"./games/heads-tails/index.html"
+},
+
+{
+name:"Color Guessing Game",
+icon:"🎨",
+desc:"Guess the correct RGB color.",
+link:"./games/color-guess/index.html"
+},
+
+{
+name:"Emoji Guess Game",
+icon:"😀",
+desc:"Guess the meaning of the emoji.",
+link:"./games/emoji-guess/index.html"
 }
 
 ];

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rock Paper Scissors</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;display:flex;justify-content:center;align-items:center;height:100vh;background:#f4f4f4}
+.card{background:white;padding:30px;border-radius:10px;text-align:center;width:320px;box-shadow:0 10px 20px rgba(0,0,0,0.1)}
+button{padding:10px 15px;margin:5px;border:none;background:#4CAF50;color:white;border-radius:6px;cursor:pointer}
+.restart{background:#333;margin-top:10px}
+.score{margin-top:10px}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Rock Paper Scissors</h2>
+
+<div>
+<button onclick="play('Rock')">✊</button>
+<button onclick="play('Paper')">✋</button>
+<button onclick="play('Scissors')">✌</button>
+</div>
+
+<div id="result"></div>
+
+<div class="score">Score: <span id="score">0</span></div>
+
+<button class="restart" onclick="restart()">Restart</button>
+
+</div>
+
+<script>
+
+let score=0;
+
+function play(user){
+
+let choices=["Rock","Paper","Scissors"];
+let computer=choices[Math.floor(Math.random()*3)];
+
+let result="";
+
+if(user===computer) result="Draw";
+
+else if(
+(user==="Rock" && computer==="Scissors") ||
+(user==="Paper" && computer==="Rock") ||
+(user==="Scissors" && computer==="Paper")
+){
+result="You Win!";
+score++;
+}
+else{
+result="You Lose!";
+score=0;
+}
+
+document.getElementById("result").textContent="Computer: "+computer+" | "+result;
+document.getElementById("score").textContent=score;
+
+}
+
+function restart(){
+score=0;
+document.getElementById("score").textContent=0;
+document.getElementById("result").textContent="";
+}
+
+</script>
+
+</body>
+</html>

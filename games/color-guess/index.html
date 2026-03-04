@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Color Guessing Game</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;display:flex;justify-content:center;align-items:center;height:100vh;background:#f9fafb}
+.card{background:white;padding:30px;border-radius:10px;text-align:center;width:320px;box-shadow:0 10px 20px rgba(0,0,0,0.1)}
+.colors{display:flex;gap:10px;margin:20px 0;justify-content:center}
+.box{width:60px;height:60px;border-radius:6px;cursor:pointer}
+.restart{background:#333;color:white;border:none;padding:10px 15px;border-radius:6px}
+.score{margin-top:10px}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Color Guess</h2>
+
+<div id="rgbText"></div>
+
+<div class="colors" id="colors"></div>
+
+<div id="result"></div>
+
+<div class="score">Score: <span id="score">0</span></div>
+
+<button class="restart" onclick="start()">Restart</button>
+
+</div>
+
+<script>
+
+let score=0;
+let correctColor;
+
+function randomColor(){
+return "rgb("+Math.floor(Math.random()*256)+","+Math.floor(Math.random()*256)+","+Math.floor(Math.random()*256)+")";
+}
+
+function start(){
+
+let colors=[];
+for(let i=0;i<3;i++) colors.push(randomColor());
+
+correctColor=colors[Math.floor(Math.random()*3)];
+
+document.getElementById("rgbText").textContent=correctColor;
+
+let container=document.getElementById("colors");
+container.innerHTML="";
+
+colors.forEach(color=>{
+let div=document.createElement("div");
+div.className="box";
+div.style.background=color;
+
+div.onclick=function(){
+
+if(color===correctColor){
+score++;
+document.getElementById("result").textContent="Correct!";
+}else{
+score=0;
+document.getElementById("result").textContent="Wrong!";
+}
+
+document.getElementById("score").textContent=score;
+
+};
+
+container.appendChild(div);
+});
+
+}
+
+start();
+
+</script>
+
+</body>
+</html>
