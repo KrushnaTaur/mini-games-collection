@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Whack a Box</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;text-align:center;background:#ecfeff}
+.grid{display:grid;grid-template-columns:repeat(3,80px);gap:10px;justify-content:center;margin:20px}
+.box{width:80px;height:80px;background:#ddd;border-radius:6px;cursor:pointer}
+.active{background:#22c55e}
+button{padding:10px 15px;background:#333;color:white;border:none;border-radius:6px}
+</style>
+</head>
+
+<body>
+
+<h2>Whack-a-Box</h2>
+
+<div class="grid" id="grid"></div>
+
+<div>Score: <span id="score">0</span></div>
+
+<button onclick="restart()">Restart</button>
+
+<script>
+
+let score=0;
+let boxes=[];
+let active;
+
+let grid=document.getElementById("grid");
+
+for(let i=0;i<9;i++){
+
+let div=document.createElement("div");
+div.className="box";
+
+div.onclick=function(){
+
+if(this===active){
+score++;
+document.getElementById("score").textContent=score;
+}
+
+}
+
+grid.appendChild(div);
+boxes.push(div);
+
+}
+
+function randomBox(){
+
+boxes.forEach(b=>b.classList.remove("active"));
+
+active=boxes[Math.floor(Math.random()*boxes.length)];
+
+active.classList.add("active");
+
+}
+
+setInterval(randomBox,800);
+
+function restart(){
+
+score=0;
+document.getElementById("score").textContent=0;
+
+}
+
+</script>
+
+</body>
+</html>

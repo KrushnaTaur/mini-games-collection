@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tap the Moving Box</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;text-align:center;background:#f3f4f6}
+#box{width:80px;height:80px;background:#ef4444;position:absolute;border-radius:8px;cursor:pointer}
+.card{margin-top:40px}
+button{padding:10px 15px;background:#333;color:white;border:none;border-radius:6px}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Tap the Moving Box</h2>
+
+<div>Score: <span id="score">0</span></div>
+
+<button onclick="restart()">Restart</button>
+
+</div>
+
+<div id="box"></div>
+
+<script>
+
+let score=0;
+
+function move(){
+
+let x=Math.random()*(window.innerWidth-100);
+let y=Math.random()*(window.innerHeight-100);
+
+box.style.left=x+"px";
+box.style.top=y+"px";
+
+}
+
+let box=document.getElementById("box");
+
+box.onclick=function(){
+
+score++;
+
+document.getElementById("score").textContent=score;
+
+move();
+
+}
+
+function restart(){
+
+score=0;
+document.getElementById("score").textContent=0;
+move();
+
+}
+
+move();
+
+</script>
+
+</body>
+</html>

@@ -68,6 +68,41 @@ name:"Emoji Guess Game",
 icon:"😀",
 desc:"Guess the meaning of the emoji.",
 link:"./games/emoji-guess/index.html"
+},
+
+{
+name:"Reaction Time Tester",
+icon:"⚡",
+desc:"Test how fast your reaction time is.",
+link:"./games/reaction-time/index.html"
+},
+
+{
+name:"Click Speed Test",
+icon:"🖱️",
+desc:"How many clicks can you make in 5 seconds?",
+link:"./games/click-speed/index.html"
+},
+
+{
+name:"Tap the Moving Box",
+icon:"📦",
+desc:"Click the moving box before it escapes.",
+link:"./games/moving-box/index.html"
+},
+
+{
+name:"Stop the Timer",
+icon:"⏱️",
+desc:"Stop the timer exactly at 5 seconds.",
+link:"./games/stop-timer/index.html"
+},
+
+{
+name:"Whack-a-Box",
+icon:"🔨",
+desc:"Click appearing boxes before time runs out.",
+link:"./games/whack-box/index.html"
 }
 
 ];

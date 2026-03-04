@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stop the Timer</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;display:flex;justify-content:center;align-items:center;height:100vh;background:#fef9c3}
+.card{background:white;padding:30px;border-radius:10px;text-align:center;width:320px;box-shadow:0 10px 20px rgba(0,0,0,0.1)}
+button{padding:10px 15px;margin:5px;border:none;background:#f59e0b;color:white;border-radius:6px}
+.restart{background:#333}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Stop the Timer</h2>
+
+<div id="time">0.00</div>
+
+<button onclick="start()">Start</button>
+<button onclick="stop()">Stop</button>
+
+<div>Score: <span id="score">0</span></div>
+
+<button class="restart" onclick="restart()">Restart</button>
+
+</div>
+
+<script>
+
+let interval;
+let time=0;
+
+function start(){
+
+interval=setInterval(()=>{
+
+time+=0.01;
+document.getElementById("time").textContent=time.toFixed(2);
+
+},10);
+
+}
+
+function stop(){
+
+clearInterval(interval);
+
+let diff=Math.abs(5-time).toFixed(2);
+
+document.getElementById("score").textContent="Off by "+diff+"s";
+
+}
+
+function restart(){
+
+time=0;
+document.getElementById("time").textContent="0.00";
+document.getElementById("score").textContent="0";
+
+}
+
+</script>
+
+</body>
+</html>
