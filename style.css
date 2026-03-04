@@ -1,0 +1,131 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Inter, sans-serif;
+background:#0f172a;
+color:white;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+background:#020617;
+border-bottom:1px solid #1e293b;
+}
+
+.header h1{
+font-family:Orbitron;
+font-size:22px;
+}
+
+.header a{
+color:#38bdf8;
+text-decoration:none;
+}
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding:80px 20px;
+}
+
+.hero h2{
+font-size:36px;
+margin-bottom:10px;
+}
+
+.hero p{
+color:#94a3b8;
+}
+
+/* GAMES */
+
+.games-section{
+padding:60px;
+}
+
+.games-section h3{
+text-align:center;
+margin-bottom:40px;
+font-size:28px;
+}
+
+.games-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:24px;
+}
+
+/* GAME CARD */
+
+.game-card{
+background:#020617;
+border:1px solid #1e293b;
+padding:28px;
+border-radius:12px;
+text-align:center;
+transition:0.25s;
+}
+
+.game-card:hover{
+transform:translateY(-6px);
+border-color:#38bdf8;
+box-shadow:0 0 18px rgba(56,189,248,0.4);
+}
+
+.game-icon{
+font-size:34px;
+margin-bottom:12px;
+}
+
+.game-card h4{
+margin-bottom:8px;
+}
+
+.game-card p{
+font-size:14px;
+color:#94a3b8;
+margin-bottom:14px;
+}
+
+.game-card a{
+display:inline-block;
+padding:8px 14px;
+background:#38bdf8;
+border-radius:6px;
+color:#020617;
+text-decoration:none;
+font-weight:500;
+}
+
+/* STATS */
+
+.stats{
+text-align:center;
+padding:60px 20px;
+border-top:1px solid #1e293b;
+}
+
+.counter{
+margin-top:10px;
+font-size:24px;
+font-weight:600;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:20px;
+font-size:14px;
+color:#64748b;
+}
