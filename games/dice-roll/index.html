@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dice Roll Simulator</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+
+body{
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:#eef2ff;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:10px;
+width:300px;
+text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+.dice{
+font-size:80px;
+margin:20px 0;
+}
+
+button{
+padding:10px 20px;
+background:#6366f1;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.restart{
+background:#333;
+margin-top:10px;
+}
+
+.score{
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Dice Roll Simulator</h2>
+
+<div class="dice" id="dice">🎲</div>
+
+<button onclick="rollDice()">Roll Dice</button>
+
+<div class="score">Rolls: <span id="score">0</span></div>
+
+<button class="restart" onclick="restart()">Restart</button>
+
+</div>
+
+<script>
+
+let rolls=0;
+
+function rollDice(){
+
+let number=Math.floor(Math.random()*6)+1;
+
+document.getElementById("dice").textContent=number;
+
+rolls++;
+
+document.getElementById("score").textContent=rolls;
+
+}
+
+function restart(){
+
+rolls=0;
+
+document.getElementById("score").textContent=0;
+
+document.getElementById("dice").textContent="🎲";
+
+}
+
+</script>
+
+</body>
+</html>

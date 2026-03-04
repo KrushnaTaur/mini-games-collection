@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Coin Flip Game</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+
+body{
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:#ecfeff;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:10px;
+width:300px;
+text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+.coin{
+font-size:70px;
+margin:20px 0;
+}
+
+button{
+padding:10px 20px;
+background:#0ea5e9;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+.restart{
+background:#333;
+margin-top:10px;
+}
+
+.score{
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Coin Flip Game</h2>
+
+<div class="coin" id="coin">🪙</div>
+
+<button onclick="flipCoin()">Flip Coin</button>
+
+<div class="score">Flips: <span id="score">0</span></div>
+
+<button class="restart" onclick="restart()">Restart</button>
+
+</div>
+
+<script>
+
+let flips=0;
+
+function flipCoin(){
+
+let result=Math.random()<0.5?"Heads":"Tails";
+
+document.getElementById("coin").textContent=result;
+
+flips++;
+
+document.getElementById("score").textContent=flips;
+
+}
+
+function restart(){
+
+flips=0;
+
+document.getElementById("score").textContent=0;
+
+document.getElementById("coin").textContent="🪙";
+
+}
+
+</script>
+
+</body>
+</html>

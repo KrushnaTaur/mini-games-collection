@@ -8,24 +8,31 @@ link:"./games/number-guess/index.html"
 },
 
 {
-name:"Rock Paper Scissors",
-icon:"✊",
-desc:"Play against the computer.",
-link:"./games/rock-paper-scissors/index.html"
+name:"Higher or Lower",
+icon:"📈",
+desc:"Guess if the next number is higher or lower.",
+link:"./games/higher-lower/index.html"
 },
 
 {
 name:"Dice Roll Simulator",
 icon:"🎲",
-desc:"Roll a random dice.",
+desc:"Roll a dice and get a random number.",
 link:"./games/dice-roll/index.html"
 },
 
 {
-name:"Tic Tac Toe",
-icon:"❌",
-desc:"Classic 2 player grid game.",
-link:"./games/tic-tac-toe/index.html"
+name:"Random Card Picker",
+icon:"🃏",
+desc:"Pick a random card from the deck.",
+link:"./games/card-picker/index.html"
+},
+
+{
+name:"Coin Flip Game",
+icon:"🪙",
+desc:"Flip a coin and see heads or tails.",
+link:"./games/coin-flip/index.html"
 }
 
 ];

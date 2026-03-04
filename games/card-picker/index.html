@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Random Card Picker</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+
+body{
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:#fef3c7;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:10px;
+width:320px;
+text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+.playing-card{
+font-size:60px;
+margin:20px 0;
+}
+
+button{
+padding:10px 20px;
+border:none;
+background:#ef4444;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+.restart{
+background:#333;
+margin-top:10px;
+}
+
+.score{
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Random Card Picker</h2>
+
+<div class="playing-card" id="card">🂠</div>
+
+<button onclick="pickCard()">Pick Card</button>
+
+<div class="score">Cards Picked: <span id="score">0</span></div>
+
+<button class="restart" onclick="restart()">Restart</button>
+
+</div>
+
+<script>
+
+let suits=["♠","♥","♦","♣"];
+let values=["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+
+let score=0;
+
+function pickCard(){
+
+let suit=suits[Math.floor(Math.random()*suits.length)];
+
+let value=values[Math.floor(Math.random()*values.length)];
+
+document.getElementById("card").textContent=value+suit;
+
+score++;
+
+document.getElementById("score").textContent=score;
+
+}
+
+function restart(){
+
+score=0;
+
+document.getElementById("score").textContent=0;
+
+document.getElementById("card").textContent="🂠";
+
+}
+
+</script>
+
+</body>
+</html>
