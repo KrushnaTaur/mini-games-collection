@@ -173,6 +173,41 @@ name:"Sliding Puzzle",
 icon:"🧩",
 desc:"Arrange numbers in the correct order.",
 link:"./games/sliding-puzzle/index.html"
+},
+
+{
+name:"Lucky Spinner",
+icon:"🎡",
+desc:"Spin the wheel and get a random prize.",
+link:"./games/lucky-spinner/index.html"
+},
+
+{
+name:"Fortune Teller",
+icon:"🔮",
+desc:"Ask a question and reveal your fortune.",
+link:"./games/fortune-teller/index.html"
+},
+
+{
+name:"Random Joke Generator",
+icon:"😂",
+desc:"Click to generate a random joke.",
+link:"./games/joke-generator/index.html"
+},
+
+{
+name:"Emoji Slot Machine",
+icon:"🎰",
+desc:"Spin emojis and match them to win.",
+link:"./games/emoji-slot/index.html"
+},
+
+{
+name:"Love Calculator",
+icon:"❤️",
+desc:"Calculate love percentage between two names.",
+link:"./games/love-calculator/index.html"
 }
 
 ];

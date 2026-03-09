@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Love Calculator</title>
+<style>
+body{font-family:Arial;text-align:center;background:#ffe4e6}
+input{padding:10px;margin:5px}
+button{padding:10px}
+</style>
+</head>
+
+<body>
+
+<h2>Love Calculator ❤️</h2>
+
+<input id="name1" placeholder="Name 1">
+<br>
+<input id="name2" placeholder="Name 2">
+
+<br><br>
+
+<button onclick="calculate()">Calculate Love</button>
+
+<div id="result"></div>
+
+<button onclick="restart()">Restart</button>
+
+<script>
+
+function calculate(){
+
+let percent=Math.floor(Math.random()*101)
+
+result.textContent="Love Score: "+percent+"% ❤️"
+
+}
+
+function restart(){
+
+name1.value=""
+name2.value=""
+result.textContent=""
+
+}
+
+</script>
+
+</body>
+</html>

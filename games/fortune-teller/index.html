@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fortune Teller</title>
+<style>
+body{font-family:Arial;text-align:center;background:#fef9c3}
+input{padding:10px}
+button{padding:10px}
+</style>
+</head>
+
+<body>
+
+<h2>Fortune Teller 🔮</h2>
+
+<input id="question" placeholder="Ask a question">
+
+<br><br>
+
+<button onclick="tell()">Reveal Fortune</button>
+
+<div id="result"></div>
+
+<button onclick="restart()">Restart</button>
+
+<script>
+
+let fortunes=[
+"Yes definitely!",
+"No chance!",
+"Maybe later.",
+"Ask again tomorrow.",
+"Very lucky outcome!"
+]
+
+function tell(){
+
+let fortune=fortunes[Math.floor(Math.random()*fortunes.length)]
+
+document.getElementById("result").textContent=fortune
+
+}
+
+function restart(){
+
+document.getElementById("question").value=""
+document.getElementById("result").textContent=""
+
+}
+
+</script>
+
+</body>
+</html>

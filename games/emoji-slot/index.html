@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Emoji Slot Machine</title>
+<style>
+body{font-family:Arial;text-align:center;background:#f3f4f6}
+.slot{font-size:50px;margin:10px}
+button{padding:10px}
+</style>
+</head>
+
+<body>
+
+<h2>Emoji Slot Machine 🎰</h2>
+
+<div>
+
+<span class="slot" id="s1">❔</span>
+<span class="slot" id="s2">❔</span>
+<span class="slot" id="s3">❔</span>
+
+</div>
+
+<div id="result"></div>
+
+<button onclick="spin()">Spin</button>
+<button onclick="restart()">Restart</button>
+
+<script>
+
+let emojis=["🍎","🍒","🍋","⭐","🍉"]
+
+function spin(){
+
+let a=emojis[Math.floor(Math.random()*5)]
+let b=emojis[Math.floor(Math.random()*5)]
+let c=emojis[Math.floor(Math.random()*5)]
+
+s1.textContent=a
+s2.textContent=b
+s3.textContent=c
+
+if(a===b && b===c){
+
+result.textContent="🎉 Jackpot!"
+
+}else{
+
+result.textContent="Try Again"
+
+}
+
+}
+
+function restart(){
+
+s1.textContent="❔"
+s2.textContent="❔"
+s3.textContent="❔"
+result.textContent=""
+
+}
+
+</script>
+
+</body>
+</html>

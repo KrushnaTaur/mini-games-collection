@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lucky Spinner</title>
+<style>
+body{font-family:Arial;text-align:center;background:#f3f4f6}
+#wheel{font-size:50px;margin:20px}
+button{padding:10px 15px}
+</style>
+</head>
+
+<body>
+
+<h2>Lucky Spinner</h2>
+
+<div id="wheel">🎡</div>
+
+<div id="result"></div>
+
+<button onclick="spin()">Spin</button>
+<button onclick="restart()">Restart</button>
+
+<script>
+
+let prizes=["Free Coffee","Try Again","10 Points","Small Prize","Big Prize"]
+
+function spin(){
+
+let prize=prizes[Math.floor(Math.random()*prizes.length)]
+
+document.getElementById("result").textContent=prize
+
+}
+
+function restart(){
+
+document.getElementById("result").textContent=""
+
+}
+
+</script>
+
+</body>
+</html>

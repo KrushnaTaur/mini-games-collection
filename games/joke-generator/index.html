@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Random Joke Generator</title>
+<style>
+body{font-family:Arial;text-align:center;background:#eef2ff}
+button{padding:10px}
+</style>
+</head>
+
+<body>
+
+<h2>Random Joke Generator 😂</h2>
+
+<div id="joke"></div>
+
+<br>
+
+<button onclick="generate()">New Joke</button>
+<button onclick="restart()">Restart</button>
+
+<script>
+
+let jokes=[
+"Why do programmers hate nature? Too many bugs.",
+"I would tell a UDP joke but you might not get it.",
+"Why did the computer go to therapy? Too many bytes of anxiety.",
+"Debugging: Being the detective in a crime movie where you are also the murderer."
+]
+
+function generate(){
+
+let joke=jokes[Math.floor(Math.random()*jokes.length)]
+
+document.getElementById("joke").textContent=joke
+
+}
+
+function restart(){
+
+document.getElementById("joke").textContent=""
+
+}
+
+</script>
+
+</body>
+</html>
