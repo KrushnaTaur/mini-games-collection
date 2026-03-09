@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Word Scramble</title>
+<style>
+body{font-family:Arial;text-align:center}
+input{padding:10px;margin:10px}
+button{padding:10px}
+</style>
+</head>
+
+<body>
+
+<h2>Word Scramble</h2>
+
+<div id="scrambled"></div>
+
+<input id="guess">
+
+<button onclick="check()">Submit</button>
+
+<div id="result"></div>
+
+<button onclick="start()">Restart</button>
+
+<script>
+
+let words=["apple","tiger","house","train","chair"]
+
+let word
+let scrambled
+
+function start(){
+
+word=words[Math.floor(Math.random()*words.length)]
+
+scrambled=word.split('').sort(()=>0.5-Math.random()).join('')
+
+document.getElementById("scrambled").textContent=scrambled
+document.getElementById("result").textContent=""
+
+}
+
+function check(){
+
+let guess=document.getElementById("guess").value
+
+if(guess===word){
+
+document.getElementById("result").textContent="Correct!"
+
+}else{
+
+document.getElementById("result").textContent="Try again"
+
+}
+
+}
+
+start()
+
+</script>
+</body>
+</html>

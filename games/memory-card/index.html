@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Memory Card Game</title>
+<style>
+body{font-family:Arial;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(4,80px);gap:10px;justify-content:center;margin:20px}
+.card{width:80px;height:80px;background:#6366f1;color:white;font-size:30px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+</style>
+</head>
+
+<body>
+
+<h2>Memory Card Game</h2>
+
+<div class="grid" id="grid"></div>
+
+<div>Matches: <span id="score">0</span></div>
+
+<button onclick="location.reload()">Restart</button>
+
+<script>
+
+let emojis=["🍎","🍎","🐶","🐶","🚗","🚗","⚽","⚽"]
+
+emojis.sort(()=>0.5-Math.random())
+
+let first=null
+let second=null
+let score=0
+
+let grid=document.getElementById("grid")
+
+emojis.forEach(e=>{
+
+let card=document.createElement("div")
+card.className="card"
+card.textContent="?"
+
+card.onclick=function(){
+
+if(card.textContent!=="?") return
+
+card.textContent=e
+
+if(!first) first=card
+
+else{
+
+second=card
+
+if(first.textContent===second.textContent){
+
+score++
+document.getElementById("score").textContent=score
+
+first=null
+second=null
+
+}else{
+
+setTimeout(()=>{
+first.textContent="?"
+second.textContent="?"
+first=null
+second=null
+},700)
+
+}
+
+}
+
+}
+
+grid.appendChild(card)
+
+})
+
+</script>
+</body>
+</html>

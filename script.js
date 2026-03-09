@@ -138,6 +138,41 @@ name:"Memory Color Click",
 icon:"🧠",
 desc:"Repeat the color sequence correctly.",
 link:"./games/memory-color/index.html"
+},
+
+{
+name:"Tic Tac Toe",
+icon:"❌",
+desc:"Classic Tic Tac Toe for two players.",
+link:"./games/tic-tac-toe/index.html"
+},
+
+{
+name:"Memory Card Game",
+icon:"🃏",
+desc:"Match pairs of cards to win.",
+link:"./games/memory-card/index.html"
+},
+
+{
+name:"Word Scramble",
+icon:"🔤",
+desc:"Unscramble the word correctly.",
+link:"./games/word-scramble/index.html"
+},
+
+{
+name:"Hangman",
+icon:"🪢",
+desc:"Guess the hidden word letter by letter.",
+link:"./games/hangman/index.html"
+},
+
+{
+name:"Sliding Puzzle",
+icon:"🧩",
+desc:"Arrange numbers in the correct order.",
+link:"./games/sliding-puzzle/index.html"
 }
 
 ];

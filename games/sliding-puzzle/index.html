@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sliding Puzzle</title>
+<style>
+body{font-family:Arial;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,80px);gap:5px;justify-content:center;margin:20px}
+.tile{width:80px;height:80px;background:#22c55e;color:white;font-size:24px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.empty{background:white}
+</style>
+</head>
+
+<body>
+
+<h2>Sliding Puzzle</h2>
+
+<div class="grid" id="grid"></div>
+
+<button onclick="restart()">Restart</button>
+
+<script>
+
+let tiles=[1,2,3,4,5,6,7,8,""]
+
+tiles.sort(()=>0.5-Math.random())
+
+let grid=document.getElementById("grid")
+
+function draw(){
+
+grid.innerHTML=""
+
+tiles.forEach((t,i)=>{
+
+let div=document.createElement("div")
+
+div.className="tile"
+
+if(t==="") div.classList.add("empty")
+
+div.textContent=t
+
+div.onclick=function(){move(i)}
+
+grid.appendChild(div)
+
+})
+
+}
+
+function move(i){
+
+let empty=tiles.indexOf("")
+
+let valid=[i-1,i+1,i-3,i+3]
+
+if(valid.includes(empty)){
+
+[tiles[i],tiles[empty]]=[tiles[empty],tiles[i]]
+
+draw()
+
+}
+
+}
+
+function restart(){
+
+tiles.sort(()=>0.5-Math.random())
+draw()
+
+}
+
+draw()
+
+</script>
+</body>
+</html>

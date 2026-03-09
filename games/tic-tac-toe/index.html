@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tic Tac Toe</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial;text-align:center;background:#f4f4f4}
+.grid{display:grid;grid-template-columns:repeat(3,80px);gap:5px;justify-content:center;margin:20px}
+.cell{width:80px;height:80px;background:white;border:1px solid #ccc;font-size:30px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+button{padding:10px 15px}
+</style>
+</head>
+
+<body>
+
+<h2>Tic Tac Toe</h2>
+
+<div class="grid" id="grid"></div>
+
+<div id="status"></div>
+
+<button onclick="restart()">Restart</button>
+
+<script>
+
+let board=["","","","","","","","",""]
+let player="X"
+
+const winComb=[
+[0,1,2],[3,4,5],[6,7,8],
+[0,3,6],[1,4,7],[2,5,8],
+[0,4,8],[2,4,6]
+]
+
+let grid=document.getElementById("grid")
+
+board.forEach((_,i)=>{
+
+let cell=document.createElement("div")
+cell.className="cell"
+
+cell.onclick=function(){
+
+if(board[i]) return
+
+board[i]=player
+cell.textContent=player
+
+if(checkWin()){
+document.getElementById("status").textContent=player+" Wins!"
+return
+}
+
+player=player==="X"?"O":"X"
+
+}
+
+grid.appendChild(cell)
+
+})
+
+function checkWin(){
+
+return winComb.some(c=>{
+return board[c[0]] && board[c[0]]===board[c[1]] && board[c[1]]===board[c[2]]
+})
+
+}
+
+function restart(){
+location.reload()
+}
+
+</script>
+
+</body>
+</html>
