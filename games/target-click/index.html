@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Target Click Game</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+body{font-family:Arial;text-align:center;background:#f4f4f4}
+#target{width:60px;height:60px;background:red;border-radius:50%;position:absolute;cursor:pointer}
+button{padding:10px 15px;margin-top:10px}
+</style>
+
+</head>
+<body>
+
+<h2>Target Click Game</h2>
+
+<div>Score: <span id="score">0</span></div>
+
+<button onclick="restart()">Restart</button>
+
+<div id="target"></div>
+
+<script>
+
+let score=0
+let target=document.getElementById("target")
+
+function move(){
+
+let x=Math.random()*(window.innerWidth-80)
+let y=Math.random()*(window.innerHeight-80)
+
+target.style.left=x+"px"
+target.style.top=y+"px"
+
+}
+
+target.onclick=function(){
+
+score++
+document.getElementById("score").textContent=score
+move()
+
+}
+
+function restart(){
+
+score=0
+document.getElementById("score").textContent=0
+move()
+
+}
+
+move()
+
+</script>
+</body>
+</html>

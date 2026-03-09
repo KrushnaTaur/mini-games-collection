@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Catch the Falling Object</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+body{margin:0;overflow:hidden;font-family:Arial}
+#basket{width:100px;height:20px;background:black;position:absolute;bottom:10px}
+.object{width:30px;height:30px;background:red;position:absolute}
+</style>
+
+</head>
+<body>
+
+<h2 style="text-align:center">Catch the Falling Object</h2>
+
+<div style="text-align:center">Score: <span id="score">0</span></div>
+
+<div id="basket"></div>
+
+<script>
+
+let basket=document.getElementById("basket")
+let score=0
+
+document.onmousemove=function(e){
+
+basket.style.left=e.clientX-50+"px"
+
+}
+
+function drop(){
+
+let obj=document.createElement("div")
+obj.className="object"
+
+let x=Math.random()*(window.innerWidth-40)
+obj.style.left=x+"px"
+
+document.body.appendChild(obj)
+
+let y=0
+
+let fall=setInterval(()=>{
+
+y+=4
+obj.style.top=y+"px"
+
+let basketRect=basket.getBoundingClientRect()
+let objRect=obj.getBoundingClientRect()
+
+if(objRect.bottom>=basketRect.top &&
+objRect.left<basketRect.right &&
+objRect.right>basketRect.left){
+
+score++
+document.getElementById("score").textContent=score
+obj.remove()
+clearInterval(fall)
+
+}
+
+if(y>window.innerHeight){
+obj.remove()
+clearInterval(fall)
+}
+
+},20)
+
+}
+
+setInterval(drop,1200)
+
+</script>
+</body>
+</html>

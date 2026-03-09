@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Memory Color Click</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+body{font-family:Arial;text-align:center;background:#fef9c3}
+.grid{display:flex;justify-content:center;gap:10px;margin:20px}
+.box{width:80px;height:80px;cursor:pointer}
+.red{background:red}
+.blue{background:blue}
+.green{background:green}
+.yellow{background:yellow}
+</style>
+
+</head>
+<body>
+
+<h2>Memory Color Click</h2>
+
+<div class="grid">
+
+<div class="box red" onclick="clickColor('red')"></div>
+<div class="box blue" onclick="clickColor('blue')"></div>
+<div class="box green" onclick="clickColor('green')"></div>
+<div class="box yellow" onclick="clickColor('yellow')"></div>
+
+</div>
+
+<div>Score: <span id="score">0</span></div>
+
+<button onclick="start()">Restart</button>
+
+<script>
+
+let colors=["red","blue","green","yellow"]
+let sequence=[]
+let user=[]
+let score=0
+
+function start(){
+
+sequence=[]
+user=[]
+next()
+
+}
+
+function next(){
+
+user=[]
+sequence.push(colors[Math.floor(Math.random()*4)])
+
+alert("Sequence: "+sequence.join(" - "))
+
+}
+
+function clickColor(color){
+
+user.push(color)
+
+if(user[user.length-1]!==sequence[user.length-1]){
+
+alert("Wrong!")
+sequence=[]
+score=0
+document.getElementById("score").textContent=0
+
+return
+
+}
+
+if(user.length===sequence.length){
+
+score++
+document.getElementById("score").textContent=score
+setTimeout(next,500)
+
+}
+
+}
+
+start()
+
+</script>
+</body>
+</html>

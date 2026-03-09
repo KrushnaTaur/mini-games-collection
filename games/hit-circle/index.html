@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hit the Random Circle</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+body{font-family:Arial;text-align:center;background:#f9fafb}
+.circle{width:60px;height:60px;background:#6366f1;border-radius:50%;position:absolute;cursor:pointer}
+</style>
+
+</head>
+<body>
+
+<h2>Hit the Random Circle</h2>
+
+<div>Score: <span id="score">0</span></div>
+
+<button onclick="restart()">Restart</button>
+
+<script>
+
+let score=0
+
+function spawn(){
+
+let circle=document.createElement("div")
+circle.className="circle"
+
+let x=Math.random()*(window.innerWidth-80)
+let y=Math.random()*(window.innerHeight-80)
+
+circle.style.left=x+"px"
+circle.style.top=y+"px"
+
+document.body.appendChild(circle)
+
+circle.onclick=function(){
+
+score++
+document.getElementById("score").textContent=score
+circle.remove()
+
+}
+
+setTimeout(()=>circle.remove(),1500)
+
+}
+
+setInterval(spawn,1000)
+
+function restart(){
+
+score=0
+document.getElementById("score").textContent=0
+
+}
+
+</script>
+</body>
+</html>

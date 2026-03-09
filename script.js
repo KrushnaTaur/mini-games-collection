@@ -103,6 +103,41 @@ name:"Whack-a-Box",
 icon:"🔨",
 desc:"Click appearing boxes before time runs out.",
 link:"./games/whack-box/index.html"
+},
+
+{
+name:"Target Click Game",
+icon:"🎯",
+desc:"Click targets appearing on screen.",
+link:"./games/target-click/index.html"
+},
+
+{
+name:"Balloon Pop Game",
+icon:"🎈",
+desc:"Pop balloons before they escape.",
+link:"./games/balloon-pop/index.html"
+},
+
+{
+name:"Catch the Falling Object",
+icon:"🧺",
+desc:"Catch falling objects with a basket.",
+link:"./games/catch-object/index.html"
+},
+
+{
+name:"Hit the Random Circle",
+icon:"⚪",
+desc:"Click circles quickly to score.",
+link:"./games/hit-circle/index.html"
+},
+
+{
+name:"Memory Color Click",
+icon:"🧠",
+desc:"Repeat the color sequence correctly.",
+link:"./games/memory-color/index.html"
 }
 
 ];
