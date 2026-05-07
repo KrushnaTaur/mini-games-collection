@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#fc4a1a,#f7b733);}
+.card{background:white;padding:35px;border-radius:12px;width:90%;max-width:380px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:20px;color:#333;}
+.display{font-size:64px;font-weight:bold;color:#fc4a1a;margin:15px 0;letter-spacing:4px;}
+.inputs{display:flex;justify-content:center;gap:10px;margin-bottom:15px;}
+.inp-group{display:flex;flex-direction:column;align-items:center;}
+.inp-group label{font-size:12px;color:#999;margin-bottom:4px;}
+.inp-group input{width:60px;padding:8px;text-align:center;font-size:18px;border:1px solid #ddd;border-radius:8px;outline:none;}
+.btns{display:flex;justify-content:center;gap:10px;margin-top:10px;}
+button{padding:10px 20px;border:none;border-radius:8px;font-size:15px;cursor:pointer;transition:0.2s;}
+#startBtn{background:#fc4a1a;color:white;}#startBtn:hover{background:#d43c10;}
+#pauseBtn{background:#f7b733;color:white;}#pauseBtn:hover{background:#d49e20;}
+#resetBtn{background:#444;color:white;}#resetBtn:hover{background:#222;}
+.msg{margin-top:12px;font-size:18px;font-weight:bold;color:#fc4a1a;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>⏳ Countdown Timer</h1>
+<div class="inputs">
+<div class="inp-group"><label>Hours</label><input type="number" id="hIn" value="0" min="0" max="23"></div>
+<div class="inp-group"><label>Minutes</label><input type="number" id="mIn" value="1" min="0" max="59"></div>
+<div class="inp-group"><label>Seconds</label><input type="number" id="sIn" value="0" min="0" max="59"></div>
+</div>
+<div class="display" id="display">00:01:00</div>
+<div class="btns">
+<button id="startBtn">Start</button>
+<button id="pauseBtn">Pause</button>
+<button id="resetBtn">Reset</button>
+</div>
+<div class="msg" id="msg"></div>
+</div>
+<script>
+let total=60,remaining=60,timer=null,running=false;
+function fmt(s){
+const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+return`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+}
+function update(){document.getElementById("display").textContent=fmt(remaining);}
+document.getElementById("startBtn").addEventListener("click",()=>{
+if(running)return;
+if(!timer){
+const h=+document.getElementById("hIn").value||0;
+const m=+document.getElementById("mIn").value||0;
+const s=+document.getElementById("sIn").value||0;
+total=h*3600+m*60+s;
+if(!total)return;
+remaining=total;
+}
+document.getElementById("msg").textContent="";
+running=true;
+timer=setInterval(()=>{
+remaining--;update();
+if(remaining<=0){clearInterval(timer);timer=null;running=false;document.getElementById("msg").textContent="⏰ Time's Up!";}
+},1000);
+update();
+});
+document.getElementById("pauseBtn").addEventListener("click",()=>{
+if(timer){clearInterval(timer);timer=null;running=false;}
+});
+document.getElementById("resetBtn").addEventListener("click",()=>{
+clearInterval(timer);timer=null;running=false;
+const h=+document.getElementById("hIn").value||0;
+const m=+document.getElementById("mIn").value||0;
+const s=+document.getElementById("sIn").value||0;
+remaining=h*3600+m*60+s;
+document.getElementById("msg").textContent="";
+update();
+});
+update();
+</script>
+</body>
+</html>

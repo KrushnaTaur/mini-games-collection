@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riddle Game</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#5f2c82,#49a09d);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:440px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:10px;color:#333;}
+.meta{font-size:15px;color:#888;margin-bottom:15px;}
+.riddle{background:#f4f0ff;padding:18px;border-radius:10px;font-size:16px;color:#333;margin-bottom:15px;line-height:1.5;min-height:80px;}
+input{width:100%;padding:12px;font-size:15px;border:1px solid #ccc;border-radius:8px;outline:none;margin-bottom:12px;text-align:center;}
+.btns{display:flex;gap:8px;justify-content:center;margin-bottom:10px;}
+button{padding:10px 20px;border:none;border-radius:8px;font-size:14px;cursor:pointer;transition:0.2s;}
+#submitBtn{background:#5f2c82;color:white;}#submitBtn:hover{background:#4a1e6a;}
+#hintBtn{background:#49a09d;color:white;}#hintBtn:hover{background:#368c89;}
+#nextBtn{background:#444;color:white;}#nextBtn:hover{background:#222;}
+.result{font-size:16px;font-weight:bold;margin-bottom:8px;}
+.hint{font-size:13px;color:#49a09d;margin-bottom:6px;}
+.score{font-size:14px;color:#888;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🤔 Riddle Game</h1>
+<div class="meta" id="meta">Riddle 1 / 8</div>
+<div class="riddle" id="riddle"></div>
+<input type="text" id="ans" placeholder="Your answer...">
+<div class="hint" id="hint"></div>
+<div class="btns">
+<button id="submitBtn">Submit</button>
+<button id="hintBtn">Hint 💡</button>
+<button id="nextBtn" style="display:none">Next ➡️</button>
+</div>
+<div class="result" id="result"></div>
+<div class="score">Score: <span id="score">0</span></div>
+</div>
+<script>
+const riddles=[
+{q:"I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",a:["echo"],h:"Mountains and valleys help me travel."},
+{q:"I have cities, but no houses live there. I have mountains, but no trees grow there. I have water, but no fish swim there. What am I?",a:["map"],h:"You use me for navigation."},
+{q:"The more you take, the more you leave behind. What am I?",a:["footsteps","steps"],h:"They appear when you walk."},
+{q:"I have hands but cannot clap. What am I?",a:["clock","watch"],h:"I tell you the time."},
+{q:"What has keys but no locks, space but no room, and you can enter but can't go inside?",a:["keyboard"],h:"You type on me."},
+{q:"I am light as a feather, but the strongest person cannot hold me for more than 5 minutes. What am I?",a:["breath","your breath"],h:"You need me to live."},
+{q:"What can you catch but not throw?",a:["cold","a cold"],h:"It makes you sneeze."},
+{q:"I have a head, a tail, but no body. What am I?",a:["coin","a coin"],h:"You can flip me."},
+];
+let idx=0,score=0,answered=false;
+function load(){
+answered=false;document.getElementById("hint").textContent="";document.getElementById("result").textContent="";
+document.getElementById("ans").value="";document.getElementById("nextBtn").style.display="none";
+document.getElementById("meta").textContent=`Riddle ${idx+1} / ${riddles.length}`;
+document.getElementById("riddle").textContent=riddles[idx].q;
+}
+document.getElementById("submitBtn").addEventListener("click",()=>{
+if(answered)return;
+const ans=document.getElementById("ans").value.trim().toLowerCase();
+if(!ans)return;
+answered=true;
+if(riddles[idx].a.includes(ans)){
+score++;document.getElementById("score").textContent=score;
+document.getElementById("result").textContent="✅ Correct!";document.getElementById("result").style.color="#28a745";
+}else{
+document.getElementById("result").textContent=`❌ Answer: ${riddles[idx].a[0]}`;document.getElementById("result").style.color="#dc3545";
+}
+if(idx<riddles.length-1)document.getElementById("nextBtn").style.display="inline-block";
+else document.getElementById("nextBtn").textContent=`Finish 🎉`;
+});
+document.getElementById("hintBtn").addEventListener("click",()=>{document.getElementById("hint").textContent=`💡 Hint: ${riddles[idx].h}`;});
+document.getElementById("nextBtn").addEventListener("click",()=>{
+idx++;if(idx>=riddles.length){document.getElementById("riddle").textContent="All done!";document.getElementById("result").textContent=`Final score: ${score}/${riddles.length} 🎉`;document.getElementById("result").style.color="#5f2c82";document.getElementById("meta").textContent="";document.getElementById("ans").style.display="none";document.getElementById("nextBtn").style.display="none";return;}
+load();
+});
+load();
+</script>
+</body>
+</html>

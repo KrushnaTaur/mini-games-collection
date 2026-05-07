@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catch the Star</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#141e30,#243b55);}
+.card{background:#0d1b2a;padding:20px;border-radius:12px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+h1{color:white;margin-bottom:8px;}
+.meta{display:flex;justify-content:space-around;color:#aaa;font-size:15px;margin-bottom:12px;}
+.meta span{color:#f7c948;}
+#arena{width:340px;height:340px;background:#0a1628;border-radius:10px;position:relative;overflow:hidden;border:2px solid #1e3a5f;}
+.star{position:absolute;font-size:28px;cursor:pointer;transition:top 0.05s,left 0.05s;user-select:none;}
+.bomb{position:absolute;font-size:26px;cursor:pointer;user-select:none;}
+button{padding:10px 25px;margin-top:12px;border:none;border-radius:8px;font-size:15px;cursor:pointer;background:#f7c948;color:#141e30;font-weight:bold;transition:0.2s;}
+button:hover{background:#d4a820;}
+.msg{color:white;font-size:16px;margin-top:8px;min-height:22px;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>⭐ Catch the Star</h1>
+<div class="meta">Score: <span id="score">0</span> | Time: <span id="time">30</span>s | Lives: <span id="lives">3</span></div>
+<div id="arena"></div>
+<button id="startBtn">Start Game</button>
+<div class="msg" id="msg">Catch stars, avoid bombs!</div>
+</div>
+<script>
+let score=0,lives=3,timeLeft=30,gameTimer,moveTimer,running=false;
+const arena=document.getElementById("arena");
+function rand(max){return Math.floor(Math.random()*max);}
+function spawnItem(){
+if(!running)return;
+const isBomb=Math.random()<0.3;
+const el=document.createElement("div");
+el.className=isBomb?"bomb":"star";
+el.textContent=isBomb?"💣":"⭐";
+el.style.left=rand(300)+"px";el.style.top=rand(300)+"px";
+el.addEventListener("click",()=>{
+if(!running)return;
+if(isBomb){lives--;document.getElementById("lives").textContent=lives;el.remove();if(lives<=0)endGame();}
+else{score++;document.getElementById("score").textContent=score;el.remove();}
+});
+arena.appendChild(el);
+setTimeout(()=>el.remove(),1500);
+}
+function endGame(){
+running=false;clearInterval(gameTimer);clearInterval(moveTimer);
+document.getElementById("msg").textContent=`Game Over! Score: ${score} 🎉`;
+document.getElementById("startBtn").style.display="inline-block";
+arena.innerHTML="";
+}
+document.getElementById("startBtn").addEventListener("click",()=>{
+score=0;lives=3;timeLeft=30;running=true;
+document.getElementById("score").textContent=0;document.getElementById("lives").textContent=3;document.getElementById("time").textContent=30;
+document.getElementById("msg").textContent="";document.getElementById("startBtn").style.display="none";arena.innerHTML="";
+gameTimer=setInterval(()=>{timeLeft--;document.getElementById("time").textContent=timeLeft;if(timeLeft<=0)endGame();},1000);
+moveTimer=setInterval(spawnItem,600);
+});
+</script>
+</body>
+</html>

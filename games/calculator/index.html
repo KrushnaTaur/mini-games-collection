@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#2c3e50,#4ca1af);}
+.calc{background:#1e1e1e;padding:20px;border-radius:16px;width:280px;box-shadow:0 15px 35px rgba(0,0,0,0.4);}
+.display{background:#111;border-radius:10px;padding:15px;margin-bottom:15px;text-align:right;}
+.expr{font-size:13px;color:#888;min-height:18px;}
+.val{font-size:32px;color:white;font-weight:bold;word-break:break-all;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+button{padding:14px 0;border:none;border-radius:10px;font-size:16px;cursor:pointer;transition:0.15s;font-weight:bold;}
+.num{background:#333;color:white;}
+.num:hover{background:#444;}
+.op{background:#f5a623;color:white;}
+.op:hover{background:#e09415;}
+.eq{background:#4ca1af;color:white;}
+.eq:hover{background:#3d8fa0;}
+.clr{background:#e74c3c;color:white;}
+.clr:hover{background:#c0392b;}
+.zero{grid-column:span 2;}
+.fn{background:#555;color:white;}
+.fn:hover{background:#666;}
+</style>
+</head>
+<body>
+<div class="calc">
+<div class="display">
+<div class="expr" id="expr"></div>
+<div class="val" id="val">0</div>
+</div>
+<div class="grid">
+<button class="clr" onclick="clear_()">C</button>
+<button class="fn" onclick="toggleSign()">+/-</button>
+<button class="fn" onclick="percent()">%</button>
+<button class="op" onclick="op('/')">÷</button>
+<button class="num" onclick="num('7')">7</button>
+<button class="num" onclick="num('8')">8</button>
+<button class="num" onclick="num('9')">9</button>
+<button class="op" onclick="op('*')">×</button>
+<button class="num" onclick="num('4')">4</button>
+<button class="num" onclick="num('5')">5</button>
+<button class="num" onclick="num('6')">6</button>
+<button class="op" onclick="op('-')">−</button>
+<button class="num" onclick="num('1')">1</button>
+<button class="num" onclick="num('2')">2</button>
+<button class="num" onclick="num('3')">3</button>
+<button class="op" onclick="op('+')">+</button>
+<button class="num zero" onclick="num('0')">0</button>
+<button class="num" onclick="dot()">.</button>
+<button class="eq" onclick="equal()">=</button>
+</div>
+</div>
+<script>
+let cur="0",prev="",operator=null,fresh=false;
+function display(){document.getElementById("val").textContent=cur.length>12?parseFloat(cur).toExponential(6):cur;}
+function num(n){if(fresh){cur=n;fresh=false;}else{cur=cur==="0"?n:cur+n;}display();}
+function dot(){if(!cur.includes(".")){cur+=".";display();}}
+function clear_(){cur="0";prev="";operator=null;fresh=false;document.getElementById("expr").textContent="";display();}
+function toggleSign(){cur=String(-parseFloat(cur));display();}
+function percent(){cur=String(parseFloat(cur)/100);display();}
+function op(o){
+if(operator&&!fresh){equal();}
+prev=cur;operator=o;fresh=true;
+document.getElementById("expr").textContent=`${prev} ${o}`;
+}
+function equal(){
+if(!operator||!prev)return;
+const a=parseFloat(prev),b=parseFloat(cur);
+let r;
+if(operator==="+")r=a+b;else if(operator==="-")r=a-b;else if(operator==="*")r=a*b;
+else if(operator==="/")r=b===0?"Error":a/b;
+document.getElementById("expr").textContent=`${prev} ${operator} ${cur} =`;
+cur=String(r);prev="";operator=null;fresh=true;display();
+}
+</script>
+</body>
+</html>

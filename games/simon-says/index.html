@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simon Says</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#1a1a2e,#16213e);}
+.card{background:#0f3460;padding:30px;border-radius:16px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+h1{color:white;margin-bottom:6px;}
+.level{color:#aaa;margin-bottom:20px;font-size:15px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.btn{width:130px;height:130px;border-radius:16px;border:none;cursor:pointer;opacity:0.6;transition:opacity 0.1s;}
+.btn:hover{opacity:0.8;}
+.btn.lit{opacity:1;filter:brightness(1.5);}
+#green{background:#4CAF50;}#red{background:#f44336;}
+#yellow{background:#FFC107;}#blue{background:#2196F3;}
+button{padding:10px 30px;border:none;border-radius:8px;font-size:16px;cursor:pointer;background:#e94560;color:white;}
+button:hover{background:#c73550;}
+.msg{color:white;font-size:16px;margin-top:10px;min-height:24px;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🎵 Simon Says</h1>
+<div class="level">Level: <span id="level">0</span> | Best: <span id="best">0</span></div>
+<div class="grid">
+<div class="btn" id="green" onclick="playerClick('green')"></div>
+<div class="btn" id="red" onclick="playerClick('red')"></div>
+<div class="btn" id="yellow" onclick="playerClick('yellow')"></div>
+<div class="btn" id="blue" onclick="playerClick('blue')"></div>
+</div>
+<button id="startBtn">Start Game</button>
+<div class="msg" id="msg">Press Start to play!</div>
+</div>
+<script>
+const colors=["green","red","yellow","blue"];
+let seq=[],playerSeq=[],playing=false,best=0;
+function flash(c,dur=400){
+return new Promise(res=>{
+const el=document.getElementById(c);
+el.classList.add("lit");
+setTimeout(()=>{el.classList.remove("lit");setTimeout(res,100);},dur);
+});
+}
+async function playSeq(){
+playing=false;
+document.getElementById("msg").textContent="Watch...";
+for(const c of seq){await flash(c);}
+playing=true;playerSeq=[];
+document.getElementById("msg").textContent="Your turn!";
+}
+function newRound(){
+seq.push(colors[Math.floor(Math.random()*4)]);
+document.getElementById("level").textContent=seq.length;
+setTimeout(playSeq,600);
+}
+async function playerClick(c){
+if(!playing)return;
+await flash(c,200);
+playerSeq.push(c);
+const i=playerSeq.length-1;
+if(playerSeq[i]!==seq[i]){
+playing=false;
+document.getElementById("msg").textContent=`❌ Wrong! You reached level ${seq.length-1}`;
+if(seq.length-1>best){best=seq.length-1;document.getElementById("best").textContent=best;}
+seq=[];
+return;
+}
+if(playerSeq.length===seq.length){playing=false;document.getElementById("msg").textContent="✅ Correct! Next round...";setTimeout(newRound,1000);}
+}
+document.getElementById("startBtn").addEventListener("click",()=>{seq=[];document.getElementById("level").textContent=0;newRound();});
+</script>
+</body>
+</html>

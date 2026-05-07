@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flag Guess</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:420px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.3);}
+h1{margin-bottom:10px;color:#333;}
+.meta{display:flex;justify-content:space-around;font-size:15px;font-weight:bold;color:#0f3460;margin-bottom:15px;}
+.flag{font-size:80px;margin:10px 0 20px;}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.opt{padding:12px;border:2px solid #ddd;border-radius:10px;font-size:14px;cursor:pointer;transition:0.2s;background:white;}
+.opt:hover{border-color:#0f3460;background:#f0f4ff;}
+.opt.correct{background:#d4edda;border-color:#28a745;color:#155724;}
+.opt.wrong{background:#f8d7da;border-color:#dc3545;color:#721c24;}
+.result{font-size:16px;font-weight:bold;margin-bottom:8px;min-height:22px;}
+button{padding:10px 25px;border:none;border-radius:8px;font-size:15px;cursor:pointer;background:#0f3460;color:white;transition:0.2s;}
+button:hover{background:#0a2540;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🌍 Flag Guess</h1>
+<div class="meta"><span>Score: <span id="score">0</span></span><span>Round: <span id="round">1</span>/10</span></div>
+<div class="flag" id="flag"></div>
+<div class="options" id="options"></div>
+<div class="result" id="result"></div>
+<button id="nextBtn" style="display:none">Next</button>
+</div>
+<script>
+const flags=[
+{flag:"🇯🇵",name:"Japan"},{flag:"🇧🇷",name:"Brazil"},{flag:"🇩🇪",name:"Germany"},{flag:"🇫🇷",name:"France"},
+{flag:"🇮🇳",name:"India"},{flag:"🇨🇳",name:"China"},{flag:"🇷🇺",name:"Russia"},{flag:"🇺🇸",name:"United States"},
+{flag:"🇬🇧",name:"United Kingdom"},{flag:"🇰🇷",name:"South Korea"},{flag:"🇮🇹",name:"Italy"},{flag:"🇪🇸",name:"Spain"},
+{flag:"🇦🇺",name:"Australia"},{flag:"🇨🇦",name:"Canada"},{flag:"🇲🇽",name:"Mexico"},{flag:"🇹🇷",name:"Turkey"},
+{flag:"🇸🇦",name:"Saudi Arabia"},{flag:"🇦🇷",name:"Argentina"},{flag:"🇿🇦",name:"South Africa"},{flag:"🇳🇴",name:"Norway"},
+{flag:"🇸🇪",name:"Sweden"},{flag:"🇳🇱",name:"Netherlands"},{flag:"🇵🇹",name:"Portugal"},{flag:"🇬🇷",name:"Greece"},
+{flag:"🇵🇱",name:"Poland"},{flag:"🇺🇦",name:"Ukraine"},{flag:"🇵🇭",name:"Philippines"},{flag:"🇮🇩",name:"Indonesia"},
+{flag:"🇳🇬",name:"Nigeria"},{flag:"🇪🇬",name:"Egypt"}
+];
+let idx=0,score=0,round=0,answered=false,queue=[];
+function shuffle(a){return a.sort(()=>Math.random()-0.5);}
+function start(){queue=shuffle([...flags]).slice(0,10);idx=0;score=0;round=0;document.getElementById("score").textContent=0;next();}
+function next(){
+if(round>=10){document.getElementById("flag").textContent="🏁";document.getElementById("options").innerHTML="";document.getElementById("result").textContent=`Final: ${score}/10 🎉`;document.getElementById("nextBtn").style.display="none";return;}
+answered=false;document.getElementById("result").textContent="";document.getElementById("nextBtn").style.display="none";
+document.getElementById("round").textContent=round+1;
+const q=queue[round];document.getElementById("flag").textContent=q.flag;
+const wrong=shuffle(flags.filter(f=>f.name!==q.name)).slice(0,3).map(f=>f.name);
+const opts=shuffle([q.name,...wrong]);
+document.getElementById("options").innerHTML="";
+opts.forEach(o=>{
+const b=document.createElement("button");b.className="opt";b.textContent=o;
+b.addEventListener("click",()=>{if(answered)return;answered=true;
+if(o===q.name){score++;document.getElementById("score").textContent=score;b.classList.add("correct");document.getElementById("result").textContent="✅ Correct!";}
+else{b.classList.add("wrong");document.querySelectorAll(".opt").forEach(x=>{if(x.textContent===q.name)x.classList.add("correct");});document.getElementById("result").textContent="❌ Wrong!";}
+round++;if(round<10)document.getElementById("nextBtn").style.display="inline-block";else setTimeout(next,1000);
+});
+document.getElementById("options").appendChild(b);
+});
+}
+document.getElementById("nextBtn").addEventListener("click",next);
+start();
+</script>
+</body>
+</html>

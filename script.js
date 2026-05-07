@@ -208,6 +208,183 @@ name:"Love Calculator",
 icon:"❤️",
 desc:"Calculate love percentage between two names.",
 link:"./games/love-calculator/index.html"
+},
+
+// NEW GAMES
+
+{
+name:"Snake Game",
+icon:"🐍",
+desc:"Classic snake — eat food, grow longer, don't crash.",
+link:"./games/snake-game/index.html"
+},
+
+{
+name:"Typing Speed Test",
+icon:"⌨️",
+desc:"How many words per minute can you type?",
+link:"./games/typing-speed/index.html"
+},
+
+{
+name:"Quiz Trivia",
+icon:"🧠",
+desc:"Answer 10 general knowledge trivia questions.",
+link:"./games/quiz-trivia/index.html"
+},
+
+{
+name:"Countdown Timer",
+icon:"⏳",
+desc:"Set a custom countdown with hours, minutes, and seconds.",
+link:"./games/countdown-timer/index.html"
+},
+
+{
+name:"Password Generator",
+icon:"🔐",
+desc:"Generate strong random passwords with custom options.",
+link:"./games/password-gen/index.html"
+},
+
+{
+name:"Age Calculator",
+icon:"🎂",
+desc:"Calculate exact age in years, months, days, and hours.",
+link:"./games/age-calculator/index.html"
+},
+
+{
+name:"BMI Calculator",
+icon:"⚖️",
+desc:"Calculate your Body Mass Index and health category.",
+link:"./games/bmi-calculator/index.html"
+},
+
+{
+name:"Calculator",
+icon:"🔢",
+desc:"A clean functional calculator for everyday math.",
+link:"./games/calculator/index.html"
+},
+
+{
+name:"Palindrome Checker",
+icon:"🔁",
+desc:"Check if a word or phrase reads the same backwards.",
+link:"./games/palindrome-check/index.html"
+},
+
+{
+name:"Simon Says",
+icon:"🎵",
+desc:"Repeat the growing color sequence — how far can you go?",
+link:"./games/simon-says/index.html"
+},
+
+{
+name:"Math Challenge",
+icon:"🧮",
+desc:"Solve 10 timed math questions as fast as you can.",
+link:"./games/math-challenge/index.html"
+},
+
+{
+name:"Color Mixer",
+icon:"🎨",
+desc:"Mix RGB sliders to create and save custom colors.",
+link:"./games/color-mixer/index.html"
+},
+
+{
+name:"Anagram Checker",
+icon:"🔀",
+desc:"Check if two words are anagrams of each other.",
+link:"./games/anagram-check/index.html"
+},
+
+{
+name:"Prime Number Checker",
+icon:"🔍",
+desc:"Check if a number is prime and see its factors.",
+link:"./games/prime-checker/index.html"
+},
+
+{
+name:"Catch the Star",
+icon:"⭐",
+desc:"Catch stars and avoid bombs before time runs out.",
+link:"./games/catch-the-star/index.html"
+},
+
+{
+name:"Bubble Burst",
+icon:"🫧",
+desc:"Pop rising bubbles before they escape the screen.",
+link:"./games/bubble-burst/index.html"
+},
+
+{
+name:"Dodge Ball",
+icon:"🎯",
+desc:"Move your cursor to dodge falling balls as long as possible.",
+link:"./games/dodge-ball/index.html"
+},
+
+{
+name:"Riddle Game",
+icon:"🤔",
+desc:"Solve 8 classic riddles with hints available.",
+link:"./games/riddle-game/index.html"
+},
+
+{
+name:"Spin the Bottle",
+icon:"🍾",
+desc:"Add players and spin to randomly pick someone.",
+link:"./games/spin-bottle/index.html"
+},
+
+{
+name:"Two Truths & a Lie",
+icon:"🤥",
+desc:"Spot the lie among three interesting statements.",
+link:"./games/two-truths-lie/index.html"
+},
+
+{
+name:"Binary Guess",
+icon:"01",
+desc:"Convert binary numbers to decimal — test your skills!",
+link:"./games/binary-guess/index.html"
+},
+
+{
+name:"Alphabet Race",
+icon:"🔤",
+desc:"Type A to Z in order as fast as possible.",
+link:"./games/alphabet-race/index.html"
+},
+
+{
+name:"Morse Code Translator",
+icon:"📡",
+desc:"Encode and decode text to Morse code.",
+link:"./games/morse-code/index.html"
+},
+
+{
+name:"Flag Guess",
+icon:"🌍",
+desc:"Identify the country from its flag emoji.",
+link:"./games/flag-guess/index.html"
+},
+
+{
+name:"Maze Runner",
+icon:"🏃",
+desc:"Navigate through a randomly generated maze.",
+link:"./games/maze-runner/index.html"
 }
 
 ];

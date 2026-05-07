@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bubble Burst</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#43cea2,#185a9d);}
+.card{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);padding:20px;border-radius:16px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+h1{color:white;margin-bottom:8px;}
+.meta{color:white;font-size:15px;margin-bottom:12px;}
+.meta span{font-weight:bold;color:#ffe082;}
+#arena{width:360px;height:360px;background:rgba(0,0,50,0.3);border-radius:12px;position:relative;overflow:hidden;}
+.bubble{position:absolute;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:bold;color:white;font-size:13px;transition:transform 0.1s;animation:rise linear;}
+.bubble:hover{transform:scale(1.1);}
+@keyframes rise{from{bottom:-60px;}to{bottom:110%;}}
+button{padding:10px 25px;margin-top:12px;border:none;border-radius:8px;font-size:15px;cursor:pointer;background:#ffe082;color:#185a9d;font-weight:bold;}
+.msg{color:white;margin-top:8px;font-size:16px;min-height:22px;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🫧 Bubble Burst</h1>
+<div class="meta">Score: <span id="score">0</span> | Time: <span id="time">30</span>s | Missed: <span id="missed">0</span>/5</div>
+<div id="arena"></div>
+<button id="startBtn">Start</button>
+<div class="msg" id="msg">Pop the bubbles!</div>
+</div>
+<script>
+const colors=["#e74c3c","#3498db","#9b59b6","#e67e22","#1abc9c","#f39c12","#e91e63","#00bcd4"];
+let score=0,missed=0,timeLeft=30,gameTimer,spawnTimer,running=false;
+const arena=document.getElementById("arena");
+function rand(a,b){return Math.floor(Math.random()*(b-a)+a);}
+function spawn(){
+if(!running)return;
+const size=rand(36,70);const dur=rand(2500,5000);
+const b=document.createElement("div");b.className="bubble";
+b.style.cssText=`width:${size}px;height:${size}px;background:${colors[rand(0,colors.length)]};left:${rand(0,360-size)}px;animation-duration:${dur}ms;opacity:0.85;`;
+b.textContent=rand(1,4)*5;
+b.addEventListener("click",()=>{score+=+b.textContent;document.getElementById("score").textContent=score;b.remove();});
+b.addEventListener("animationend",()=>{if(b.parentNode){missed++;document.getElementById("missed").textContent=missed;b.remove();if(missed>=5)endGame();}});
+arena.appendChild(b);
+}
+function endGame(){
+running=false;clearInterval(gameTimer);clearInterval(spawnTimer);
+document.getElementById("msg").textContent=`Game Over! Score: ${score} 🎉`;
+document.getElementById("startBtn").style.display="inline-block";
+setTimeout(()=>arena.innerHTML="",500);
+}
+document.getElementById("startBtn").addEventListener("click",()=>{
+score=0;missed=0;timeLeft=30;running=true;arena.innerHTML="";
+document.getElementById("score").textContent=0;document.getElementById("missed").textContent=0;document.getElementById("time").textContent=30;
+document.getElementById("msg").textContent="";document.getElementById("startBtn").style.display="none";
+gameTimer=setInterval(()=>{timeLeft--;document.getElementById("time").textContent=timeLeft;if(timeLeft<=0)endGame();},1000);
+spawnTimer=setInterval(spawn,700);spawn();
+});
+</script>
+</body>
+</html>

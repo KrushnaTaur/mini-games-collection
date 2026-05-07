@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morse Code</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#232526,#414345);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:460px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.3);}
+h1{margin-bottom:20px;color:#333;}
+.sections{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:15px;}
+label{display:block;text-align:left;font-size:13px;color:#888;margin-bottom:4px;}
+textarea{width:100%;padding:10px;font-size:14px;border:1px solid #ccc;border-radius:8px;outline:none;resize:none;height:65px;font-family:monospace;}
+.btns{display:flex;gap:8px;justify-content:center;margin-bottom:12px;}
+button{padding:10px 20px;border:none;border-radius:8px;font-size:14px;cursor:pointer;transition:0.2s;}
+#encBtn{background:#232526;color:white;}#encBtn:hover{background:#111;}
+#decBtn{background:#414345;color:white;}#decBtn:hover{background:#333;}
+#clearBtn{background:#ccc;color:#333;}#clearBtn:hover{background:#bbb;}
+.ref{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;font-size:12px;margin-top:10px;max-height:120px;overflow-y:auto;}
+.ref div{background:#f4f4f4;padding:3px 6px;border-radius:4px;text-align:left;font-family:monospace;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>📡 Morse Code</h1>
+<div class="sections">
+<div><label>Text (English)</label><textarea id="textIn" placeholder="Type text here..."></textarea></div>
+<div><label>Morse Code (use . - and spaces)</label><textarea id="morseIn" placeholder="Type morse here... e.g. .... ."></textarea></div>
+</div>
+<div class="btns">
+<button id="encBtn">Text → Morse</button>
+<button id="decBtn">Morse → Text</button>
+<button id="clearBtn">Clear</button>
+</div>
+<div class="ref" id="ref"></div>
+</div>
+<script>
+const map={A:".-",B:"-...",C:"-.-.",D:"-..",E:".",F:"..-.",G:"--.",H:"....",I:"..",J:".---",K:"-.-",L:".-..",M:"--",N:"-.",O:"---",P:".--.",Q:"--.-",R:".-.",S:"...",T:"-",U:"..-",V:"...-",W:".--",X:"-..-",Y:"-.--",Z:"--..",0:"-----",1:".----",2:"..---",3:"...--",4:"....-",5:".....",6:"-....",7:"--...",8:"---..",9:"----."};
+const rev={};Object.entries(map).forEach(([k,v])=>rev[v]=k);
+document.getElementById("encBtn").addEventListener("click",()=>{
+const t=document.getElementById("textIn").value.toUpperCase();
+const morse=t.split("").map(c=>{if(c===" ")return"/";return map[c]||"?"}).join(" ");
+document.getElementById("morseIn").value=morse;
+});
+document.getElementById("decBtn").addEventListener("click",()=>{
+const m=document.getElementById("morseIn").value.trim();
+const words=m.split(" / ");
+const text=words.map(w=>w.split(" ").map(c=>rev[c]||"?").join("")).join(" ");
+document.getElementById("textIn").value=text;
+});
+document.getElementById("clearBtn").addEventListener("click",()=>{document.getElementById("textIn").value="";document.getElementById("morseIn").value="";});
+// ref table
+const ref=document.getElementById("ref");
+Object.entries(map).slice(0,26).forEach(([k,v])=>{const d=document.createElement("div");d.textContent=`${k}: ${v}`;ref.appendChild(d);});
+</script>
+</body>
+</html>

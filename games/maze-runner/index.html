@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maze Runner</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#005c97,#363795);}
+.card{background:#1a1a2e;padding:20px;border-radius:12px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+h1{color:white;margin-bottom:8px;}
+canvas{display:block;margin:10px auto;border-radius:6px;}
+.meta{color:#aaa;font-size:14px;margin-bottom:8px;}
+.meta span{color:#ffd700;}
+button{padding:10px 25px;border:none;border-radius:8px;font-size:15px;cursor:pointer;background:#363795;color:white;transition:0.2s;margin:4px;}
+button:hover{background:#2a2d7a;}
+.msg{color:white;font-size:15px;margin-top:8px;}
+.info{color:#888;font-size:12px;margin-top:5px;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🏃 Maze Runner</h1>
+<div class="meta">Level: <span id="level">1</span> | Time: <span id="time">0</span>s</div>
+<canvas id="canvas" width="300" height="300"></canvas>
+<button id="newBtn">New Maze</button>
+<div class="msg" id="msg"></div>
+<div class="info">Arrow keys or WASD to move</div>
+</div>
+<script>
+const C=300,CELL=20,COLS=15,ROWS=15;
+const canvas=document.getElementById("canvas");const ctx=canvas.getContext("2d");
+let maze=[],player,goal,level=1,startTime,timerInterval;
+function genMaze(){
+maze=Array.from({length:ROWS},()=>Array(COLS).fill(1));
+function carve(r,c){
+maze[r][c]=0;
+const dirs=[[0,2],[2,0],[0,-2],[-2,0]].sort(()=>Math.random()-0.5);
+for(const[dr,dc]of dirs){const nr=r+dr,nc=c+dc;
+if(nr>0&&nr<ROWS&&nc>0&&nc<COLS&&maze[nr][nc]===1){maze[r+dr/2][c+dc/2]=0;carve(nr,nc);}}
+}
+carve(1,1);
+}
+function draw(){
+ctx.fillStyle="#0a0a1a";ctx.fillRect(0,0,C,C);
+for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+if(maze[r][c]===1){ctx.fillStyle="#363795";ctx.fillRect(c*CELL,r*CELL,CELL,CELL);}
+}
+// goal
+ctx.fillStyle="#ffd700";ctx.font="16px Arial";ctx.textAlign="center";
+ctx.fillText("🏁",goal.c*CELL+CELL/2,goal.r*CELL+CELL-2);
+// player
+ctx.fillText("🟢",player.c*CELL+CELL/2,player.r*CELL+CELL-2);
+}
+function init(){
+genMaze();
+player={r:1,c:1};goal={r:ROWS-2,c:COLS-2};
+maze[ROWS-2][COLS-2]=0;
+startTime=Date.now();
+clearInterval(timerInterval);
+timerInterval=setInterval(()=>{document.getElementById("time").textContent=Math.floor((Date.now()-startTime)/1000);},200);
+document.getElementById("msg").textContent="";draw();
+}
+function move(dr,dc){
+const nr=player.r+dr,nc=player.c+dc;
+if(nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&maze[nr][nc]===0){
+player.r=nr;player.c=nc;draw();
+if(nr===goal.r&&nc===goal.c){
+clearInterval(timerInterval);
+const t=Math.floor((Date.now()-startTime)/1000);
+document.getElementById("msg").textContent=`🎉 Solved in ${t}s! Level ${level} complete!`;
+level++;document.getElementById("level").textContent=level;
+}
+}
+}
+document.addEventListener("keydown",e=>{
+if(e.key==="ArrowUp"||e.key==="w")move(-1,0);
+else if(e.key==="ArrowDown"||e.key==="s")move(1,0);
+else if(e.key==="ArrowLeft"||e.key==="a")move(0,-1);
+else if(e.key==="ArrowRight"||e.key==="d")move(0,1);
+e.preventDefault();
+});
+document.getElementById("newBtn").addEventListener("click",init);
+init();
+</script>
+</body>
+</html>

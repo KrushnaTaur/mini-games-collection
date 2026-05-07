@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Truths and a Lie</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#ee0979,#ff6a00);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:440px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:8px;color:#333;}
+.meta{color:#888;font-size:14px;margin-bottom:15px;}
+.statements{display:flex;flex-direction:column;gap:10px;margin-bottom:15px;}
+.stmt{padding:14px;border:2px solid #ddd;border-radius:10px;font-size:15px;cursor:pointer;text-align:left;transition:0.2s;background:white;}
+.stmt:hover{border-color:#ee0979;background:#fff5f5;}
+.stmt.lie{background:#f8d7da;border-color:#dc3545;color:#721c24;}
+.stmt.truth{background:#d4edda;border-color:#28a745;color:#155724;}
+.stmt.wrong{background:#ffe5cc;border-color:#fd7e14;color:#7d3803;}
+button{padding:10px 25px;border:none;border-radius:8px;font-size:15px;cursor:pointer;background:#ee0979;color:white;transition:0.2s;}
+button:hover{background:#cc0765;}
+.result{font-size:17px;font-weight:bold;margin-top:10px;color:#ee0979;}
+.score{color:#888;font-size:14px;margin-top:5px;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🤥 Two Truths & a Lie</h1>
+<div class="meta" id="meta">Round 1 / 8</div>
+<div class="statements" id="stmts"></div>
+<button id="nextBtn" style="display:none">Next Round</button>
+<div class="result" id="result"></div>
+<div class="score">Score: <span id="score">0</span>/8</div>
+</div>
+<script>
+const rounds=[
+{stmts:["Honey never spoils – edible honey was found in 3000-year-old tombs.","Sharks are the only fish that can blink with both eyes.","Cleopatra lived closer in time to the Moon landing than to the pyramids."],lie:1},
+{stmts:["Bananas are slightly radioactive.","A group of flamingos is called a 'flamboyance'.","Goldfish have a 3-second memory."],lie:2},
+{stmts:["The Eiffel Tower can be 15 cm taller during summer due to heat expansion.","Scotland's national animal is the unicorn.","Humans and dinosaurs coexisted for thousands of years."],lie:2},
+{stmts:["Octopuses have three hearts.","Wombat poop is cube-shaped.","A snail can sleep for up to 6 months."],lie:2},
+{stmts:["The Great Wall of China is visible from space with the naked eye.","Crows can recognize and remember human faces.","Some turtles can breathe through their rear ends."],lie:0},
+{stmts:["Cats have fewer toes on their back paws than their front paws.","Water can boil and freeze at the same time – it's called the triple point.","Lightning never strikes the same place twice."],lie:2},
+{stmts:["The human eye can distinguish about 10 million different colors.","Oxford University is older than the Aztec Empire.","The Amazon river flows into the Pacific Ocean."],lie:2},
+{stmts:["There are more trees on Earth than stars in the Milky Way.","Penguins propose to their mates with a pebble.","Butterflies taste with their stomachs."],lie:2},
+];
+let idx=0,score=0,answered=false;
+function load(){
+answered=false;document.getElementById("result").textContent="";document.getElementById("nextBtn").style.display="none";
+document.getElementById("meta").textContent=`Round ${idx+1} / ${rounds.length}`;
+const d=document.getElementById("stmts");d.innerHTML="";
+rounds[idx].stmts.forEach((s,i)=>{
+const el=document.createElement("div");el.className="stmt";el.textContent=`${i+1}. ${s}`;
+el.addEventListener("click",()=>pick(i,el));d.appendChild(el);
+});
+}
+function pick(i,el){
+if(answered)return;answered=true;
+const lie=rounds[idx].lie;
+document.querySelectorAll(".stmt").forEach((s,j)=>{
+if(j===lie)s.classList.add("lie");
+});
+if(i===lie){score++;document.getElementById("score").textContent=score;document.getElementById("result").textContent="✅ Correct! That was the lie!";el.classList.add("lie");}
+else{el.classList.add("wrong");document.getElementById("result").textContent=`❌ Wrong! Statement ${lie+1} was the lie.`;}
+document.getElementById("nextBtn").style.display=idx<rounds.length-1?"inline-block":"none";
+if(idx===rounds.length-1)document.getElementById("result").textContent+=" Game over! Score: "+score+"/"+rounds.length;
+}
+document.getElementById("nextBtn").addEventListener("click",()=>{idx++;load();});
+load();
+</script>
+</body>
+</html>

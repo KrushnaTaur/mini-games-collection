@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typing Speed Test</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#f093fb,#f5576c);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:480px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:15px;color:#333;}
+.sentence{background:#f8f8f8;padding:15px;border-radius:8px;font-size:16px;line-height:1.6;margin-bottom:15px;min-height:60px;color:#555;}
+textarea{width:100%;padding:12px;font-size:15px;border-radius:8px;border:1px solid #ccc;outline:none;resize:none;height:70px;}
+.stats{display:flex;justify-content:space-around;margin:12px 0;font-size:15px;font-weight:bold;}
+.stat span{color:#f5576c;}
+button{padding:10px 25px;margin:5px;border:none;border-radius:8px;font-size:15px;cursor:pointer;background:#f5576c;color:white;transition:0.2s;}
+button:hover{background:#d63f5a;}
+.result{margin-top:10px;font-size:17px;font-weight:bold;color:#f5576c;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>⌨️ Typing Speed Test</h1>
+<div class="sentence" id="sentence"></div>
+<textarea id="input" placeholder="Start typing here..." disabled></textarea>
+<div class="stats">
+<div>Time: <span id="time">30</span>s</div>
+<div>WPM: <span id="wpm">0</span></div>
+<div>Accuracy: <span id="acc">100</span>%</div>
+</div>
+<button id="startBtn">Start</button>
+<div class="result" id="result"></div>
+</div>
+<script>
+const sentences=["The quick brown fox jumps over the lazy dog","Practice makes a man perfect in every task","JavaScript is the language of the web today","Typing fast requires focus and daily practice","Success comes to those who work hard every day"];
+let timer,timeLeft,started=false;
+function pick(){return sentences[Math.floor(Math.random()*sentences.length)];}
+function start(){
+document.getElementById("sentence").textContent=pick();
+document.getElementById("input").value="";
+document.getElementById("input").disabled=false;
+document.getElementById("input").focus();
+document.getElementById("result").textContent="";
+document.getElementById("wpm").textContent=0;
+document.getElementById("acc").textContent=100;
+timeLeft=30;document.getElementById("time").textContent=30;
+if(timer)clearInterval(timer);
+started=true;
+timer=setInterval(()=>{
+timeLeft--;document.getElementById("time").textContent=timeLeft;
+if(timeLeft<=0){clearInterval(timer);finish();}
+},1000);
+}
+function finish(){
+document.getElementById("input").disabled=true;started=false;
+const words=document.getElementById("input").value.trim().split(/\s+/).filter(Boolean).length;
+const wpm=Math.round(words*(60/30));
+document.getElementById("wpm").textContent=wpm;
+document.getElementById("result").textContent=`Done! Your speed: ${wpm} WPM 🎉`;
+}
+document.getElementById("input").addEventListener("input",()=>{
+if(!started)return;
+const typed=document.getElementById("input").value;
+const target=document.getElementById("sentence").textContent;
+let correct=0;
+for(let i=0;i<typed.length;i++)if(typed[i]===target[i])correct++;
+const acc=typed.length?Math.round((correct/typed.length)*100):100;
+document.getElementById("acc").textContent=acc;
+if(typed===target)finish();
+});
+document.getElementById("startBtn").addEventListener("click",start);
+document.getElementById("sentence").textContent="Click Start to begin!";
+</script>
+</body>
+</html>

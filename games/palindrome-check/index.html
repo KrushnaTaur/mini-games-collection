@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palindrome Checker</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#e96c75,#f5a7ae);}
+.card{background:white;padding:35px;border-radius:12px;width:90%;max-width:400px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:20px;color:#333;}
+input{width:100%;padding:12px;font-size:16px;border:1px solid #ccc;border-radius:8px;outline:none;margin-bottom:12px;text-align:center;}
+button{padding:12px 25px;border:none;border-radius:8px;font-size:16px;cursor:pointer;background:#e96c75;color:white;transition:0.2s;margin:4px;}
+button:hover{background:#c95560;}
+.result{margin-top:15px;padding:20px;border-radius:10px;font-size:22px;font-weight:bold;display:none;}
+.reversed{margin-top:10px;font-size:14px;color:#888;}
+.examples{margin-top:18px;font-size:13px;color:#aaa;}
+.examples span{cursor:pointer;color:#e96c75;margin:0 4px;}
+.examples span:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🔁 Palindrome Checker</h1>
+<input type="text" id="wordIn" placeholder="Type a word or phrase...">
+<button id="checkBtn">Check</button>
+<button id="clearBtn">Clear</button>
+<div class="result" id="result"></div>
+<div class="reversed" id="rev"></div>
+<div class="examples">Try: <span onclick="tryIt('racecar')">racecar</span> <span onclick="tryIt('hello')">hello</span> <span onclick="tryIt('madam')">madam</span> <span onclick="tryIt('level')">level</span></div>
+</div>
+<script>
+function tryIt(w){document.getElementById("wordIn").value=w;check();}
+function check(){
+const raw=document.getElementById("wordIn").value;
+if(!raw.trim())return;
+const clean=raw.toLowerCase().replace(/[^a-z0-9]/g,"");
+const rev=clean.split("").reverse().join("");
+const isPalin=clean===rev;
+const res=document.getElementById("result");
+res.style.display="block";
+if(isPalin){res.textContent="✅ Yes! It's a Palindrome";res.style.background="#d4edda";res.style.color="#155724";}
+else{res.textContent="❌ Not a Palindrome";res.style.background="#f8d7da";res.style.color="#721c24";}
+document.getElementById("rev").textContent=`Reversed: "${clean.split("").reverse().join("")}"`;
+}
+document.getElementById("checkBtn").addEventListener("click",check);
+document.getElementById("clearBtn").addEventListener("click",()=>{
+document.getElementById("wordIn").value="";
+document.getElementById("result").style.display="none";
+document.getElementById("rev").textContent="";
+});
+document.getElementById("wordIn").addEventListener("keydown",e=>{if(e.key==="Enter")check();});
+</script>
+</body>
+</html>

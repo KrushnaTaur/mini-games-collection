@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Binary Guess</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#000000,#434343);}
+.card{background:#1a1a1a;padding:30px;border-radius:12px;width:90%;max-width:420px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.5);}
+h1{color:#00ff41;margin-bottom:10px;font-family:monospace;}
+.meta{color:#888;font-size:14px;margin-bottom:18px;}
+.meta span{color:#00ff41;}
+.binary{font-size:32px;font-family:monospace;color:#00ff41;letter-spacing:6px;margin:10px 0 20px;}
+input{width:100%;padding:12px;font-size:18px;background:#111;color:#00ff41;border:1px solid #00ff41;border-radius:8px;outline:none;text-align:center;font-family:monospace;margin-bottom:12px;}
+button{padding:11px 25px;border:none;border-radius:8px;font-size:15px;cursor:pointer;margin:4px;transition:0.2s;}
+#submitBtn{background:#00ff41;color:#000;font-weight:bold;}#submitBtn:hover{background:#00dd35;}
+#skipBtn{background:#444;color:#aaa;}#skipBtn:hover{background:#555;}
+.result{font-size:16px;font-weight:bold;margin-top:10px;min-height:22px;}
+.hint{font-size:12px;color:#555;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>01 Binary Guess</h1>
+<div class="meta">Score: <span id="score">0</span> | Streak: <span id="streak">0</span></div>
+<div>Convert this binary to decimal:</div>
+<div class="binary" id="binary"></div>
+<input type="number" id="ans" placeholder="Enter decimal..." min="0">
+<div>
+<button id="submitBtn">Submit</button>
+<button id="skipBtn">Skip</button>
+</div>
+<div class="result" id="result"></div>
+<div class="hint" id="hint"></div>
+</div>
+<script>
+let score=0,streak=0,correct;
+function newQ(){
+const bits=Math.random()<0.5?4:8;
+const val=Math.floor(Math.random()*(Math.pow(2,bits)-1))+1;
+correct=val;
+document.getElementById("binary").textContent=val.toString(2).padStart(bits,"0");
+document.getElementById("ans").value="";document.getElementById("result").textContent="";document.getElementById("hint").textContent="";
+}
+document.getElementById("submitBtn").addEventListener("click",()=>{
+const ans=+document.getElementById("ans").value;
+if(ans===correct){
+score++;streak++;
+document.getElementById("score").textContent=score;document.getElementById("streak").textContent=streak;
+document.getElementById("result").textContent=`✅ Correct! ${correct}`;document.getElementById("result").style.color="#00ff41";
+setTimeout(newQ,1000);
+}else{
+streak=0;document.getElementById("streak").textContent=0;
+document.getElementById("result").textContent=`❌ Wrong! Answer was ${correct}`;document.getElementById("result").style.color="#ff4444";
+document.getElementById("hint").textContent=showCalc();
+}
+});
+function showCalc(){
+const b=correct.toString(2);let parts=[];
+b.split("").reverse().forEach((bit,i)=>{if(bit==="1")parts.push(`${bit}×2^${i}(=${Math.pow(2,i)})`);});
+return"Hint: "+parts.reverse().join(" + ");
+}
+document.getElementById("skipBtn").addEventListener("click",()=>{streak=0;document.getElementById("streak").textContent=0;newQ();});
+document.getElementById("ans").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("submitBtn").click();});
+newQ();
+</script>
+</body>
+</html>

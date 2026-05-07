@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anagram Checker</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);}
+.card{background:white;padding:35px;border-radius:12px;width:90%;max-width:400px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:20px;color:#333;}
+input{width:100%;padding:12px;font-size:16px;border:1px solid #ccc;border-radius:8px;outline:none;margin-bottom:12px;text-align:center;}
+button{padding:11px 25px;border:none;border-radius:8px;font-size:15px;cursor:pointer;background:#2c5364;color:white;transition:0.2s;margin:4px;}
+button:hover{background:#1d3a47;}
+.result{margin-top:15px;padding:18px;border-radius:10px;font-size:20px;font-weight:bold;display:none;}
+.details{font-size:13px;margin-top:8px;opacity:0.8;}
+.examples{margin-top:18px;font-size:13px;color:#aaa;}
+.examples span{cursor:pointer;color:#2c5364;margin:0 4px;}
+.examples span:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🔀 Anagram Checker</h1>
+<input type="text" id="w1" placeholder="First word...">
+<input type="text" id="w2" placeholder="Second word...">
+<button id="checkBtn">Check</button>
+<button onclick="clearAll()">Clear</button>
+<div class="result" id="result">
+<div id="res"></div>
+<div class="details" id="details"></div>
+</div>
+<div class="examples">Try: <span onclick="fill('listen','silent')">listen/silent</span> <span onclick="fill('hello','world')">hello/world</span> <span onclick="fill('earth','heart')">earth/heart</span></div>
+</div>
+<script>
+function fill(a,b){document.getElementById("w1").value=a;document.getElementById("w2").value=b;check();}
+function sort(s){return s.toLowerCase().replace(/[^a-z]/g,"").split("").sort().join("");}
+function check(){
+const a=document.getElementById("w1").value.trim();
+const b=document.getElementById("w2").value.trim();
+if(!a||!b)return;
+const isA=sort(a)===sort(b)&&sort(a).length>0;
+const res=document.getElementById("result");res.style.display="block";
+if(isA){res.style.background="#d4edda";res.style.color="#155724";document.getElementById("res").textContent="✅ Yes! They are Anagrams";}
+else{res.style.background="#f8d7da";res.style.color="#721c24";document.getElementById("res").textContent="❌ Not Anagrams";}
+document.getElementById("details").textContent=`"${a}" sorted: ${sort(a)} | "${b}" sorted: ${sort(b)}`;
+}
+function clearAll(){document.getElementById("w1").value="";document.getElementById("w2").value="";document.getElementById("result").style.display="none";}
+document.getElementById("checkBtn").addEventListener("click",check);
+</script>
+</body>
+</html>

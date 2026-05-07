@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Trivia</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#4facfe,#00f2fe);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:440px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:15px;color:#333;}
+.progress{font-size:14px;color:#999;margin-bottom:8px;}
+.question{font-size:17px;font-weight:bold;color:#333;margin-bottom:18px;min-height:50px;}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px;}
+.opt{padding:12px;border:2px solid #ddd;border-radius:8px;cursor:pointer;font-size:14px;transition:0.2s;background:white;}
+.opt:hover{border-color:#4facfe;background:#f0faff;}
+.opt.correct{background:#d4edda;border-color:#28a745;color:#155724;}
+.opt.wrong{background:#f8d7da;border-color:#dc3545;color:#721c24;}
+.score{font-size:18px;font-weight:bold;color:#4facfe;margin-bottom:10px;}
+button{padding:10px 25px;border:none;border-radius:8px;font-size:15px;cursor:pointer;background:#4facfe;color:white;transition:0.2s;}
+button:hover{background:#3d8fd6;}
+.result{font-size:17px;font-weight:bold;color:#333;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🧠 Quiz Trivia</h1>
+<div class="progress" id="progress">Question 1 / 10</div>
+<div class="score">Score: <span id="score">0</span></div>
+<div class="question" id="question"></div>
+<div class="options" id="options"></div>
+<button id="nextBtn" style="display:none">Next</button>
+<div class="result" id="result"></div>
+</div>
+<script>
+const qs=[
+{q:"What is the capital of France?",a:["Paris","London","Berlin","Madrid"],c:0},
+{q:"How many sides does a hexagon have?",a:["5","6","7","8"],c:1},
+{q:"Which planet is known as the Red Planet?",a:["Venus","Jupiter","Mars","Saturn"],c:2},
+{q:"What is 12 × 12?",a:["124","144","132","148"],c:1},
+{q:"Who painted the Mona Lisa?",a:["Van Gogh","Picasso","Da Vinci","Rembrandt"],c:2},
+{q:"What gas do plants absorb from air?",a:["Oxygen","Nitrogen","Carbon Dioxide","Hydrogen"],c:2},
+{q:"How many continents are there?",a:["5","6","7","8"],c:2},
+{q:"What is the speed of light (approx)?",a:["300,000 km/s","150,000 km/s","3,000 km/s","30,000 km/s"],c:0},
+{q:"Which is the largest ocean?",a:["Atlantic","Indian","Arctic","Pacific"],c:3},
+{q:"What is H2O commonly known as?",a:["Salt","Water","Oxygen","Hydrogen"],c:1}
+];
+let idx=0,score=0,answered=false;
+function load(){
+answered=false;
+document.getElementById("nextBtn").style.display="none";
+document.getElementById("result").textContent="";
+const q=qs[idx];
+document.getElementById("progress").textContent=`Question ${idx+1} / ${qs.length}`;
+document.getElementById("question").textContent=q.q;
+const opts=document.getElementById("options");
+opts.innerHTML="";
+q.a.forEach((a,i)=>{
+const btn=document.createElement("button");
+btn.className="opt";btn.textContent=a;
+btn.addEventListener("click",()=>answer(i,btn));
+opts.appendChild(btn);
+});
+}
+function answer(i,btn){
+if(answered)return;answered=true;
+const correct=qs[idx].c;
+document.querySelectorAll(".opt").forEach((b,j)=>{
+if(j===correct)b.classList.add("correct");
+else if(j===i)b.classList.add("wrong");
+});
+if(i===correct){score++;document.getElementById("score").textContent=score;}
+document.getElementById("nextBtn").style.display=idx<qs.length-1?"inline-block":"none";
+if(idx===qs.length-1){
+document.getElementById("result").textContent=`Game over! Final score: ${score}/${qs.length} 🎉`;
+}
+}
+document.getElementById("nextBtn").addEventListener("click",()=>{idx++;load();});
+load();
+</script>
+</body>
+</html>

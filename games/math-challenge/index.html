@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Challenge</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#f7971e,#ffd200);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:400px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:10px;color:#333;}
+.meta{display:flex;justify-content:space-around;margin-bottom:15px;font-size:15px;font-weight:bold;}
+.meta span{color:#f7971e;}
+.question{font-size:36px;font-weight:bold;color:#333;margin:15px 0;}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px;}
+.opt{padding:14px;border:2px solid #ddd;border-radius:10px;font-size:20px;font-weight:bold;cursor:pointer;transition:0.2s;background:white;}
+.opt:hover{border-color:#f7971e;background:#fff8e1;}
+.opt.correct{background:#d4edda;border-color:#28a745;}
+.opt.wrong{background:#f8d7da;border-color:#dc3545;}
+.timer-bar{height:8px;background:#eee;border-radius:4px;margin-bottom:10px;overflow:hidden;}
+.timer-fill{height:100%;background:#f7971e;transition:width 0.1s linear;border-radius:4px;}
+button{padding:10px 25px;border:none;border-radius:8px;font-size:15px;cursor:pointer;background:#f7971e;color:white;transition:0.2s;}
+button:hover{background:#d4840c;}
+.msg{font-size:16px;font-weight:bold;color:#333;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🧮 Math Challenge</h1>
+<div class="meta"><div>Score: <span id="score">0</span></div><div>Round: <span id="round">0</span>/10</div></div>
+<div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+<div class="question" id="question">Press Start!</div>
+<div class="options" id="options"></div>
+<button id="startBtn">Start</button>
+<div class="msg" id="msg"></div>
+</div>
+<script>
+let score=0,round=0,correct=0,timer,answered,timeLeft;
+const ops=["+","-","×"];
+function genQ(){
+const op=ops[Math.floor(Math.random()*3)];
+let a,b;
+if(op==="+"){a=Math.floor(Math.random()*50)+1;b=Math.floor(Math.random()*50)+1;correct=a+b;}
+else if(op==="-"){a=Math.floor(Math.random()*50)+10;b=Math.floor(Math.random()*a)+1;correct=a-b;}
+else{a=Math.floor(Math.random()*12)+1;b=Math.floor(Math.random()*12)+1;correct=a*b;}
+document.getElementById("question").textContent=`${a} ${op} ${b} = ?`;
+const opts=new Set([correct]);
+while(opts.size<4){const d=correct+Math.floor(Math.random()*20)-10;if(d!==correct&&d>=0)opts.add(d);}
+const arr=[...opts].sort(()=>Math.random()-0.5);
+document.getElementById("options").innerHTML="";
+arr.forEach(o=>{
+const btn=document.createElement("button");btn.className="opt";btn.textContent=o;
+btn.addEventListener("click",()=>check(o,btn));
+document.getElementById("options").appendChild(btn);
+});
+}
+function check(val,btn){
+if(answered)return;answered=true;clearInterval(timer);
+document.querySelectorAll(".opt").forEach(b=>{if(+b.textContent===correct)b.classList.add("correct");});
+if(val===correct){score++;document.getElementById("score").textContent=score;document.getElementById("msg").textContent="✅ Correct!";}
+else{btn.classList.add("wrong");document.getElementById("msg").textContent=`❌ Wrong! Answer: ${correct}`;}
+if(round<10)setTimeout(nextRound,1000);else setTimeout(finish,1200);
+}
+function startTimer(){
+timeLeft=10;document.getElementById("timerFill").style.width="100%";
+timer=setInterval(()=>{
+timeLeft-=0.1;
+document.getElementById("timerFill").style.width=(timeLeft/10*100)+"%";
+if(timeLeft<=0){clearInterval(timer);if(!answered){answered=true;document.getElementById("msg").textContent=`⏰ Time's up! Answer: ${correct}`;document.querySelectorAll(".opt").forEach(b=>{if(+b.textContent===correct)b.classList.add("correct");});if(round<10)setTimeout(nextRound,1000);else setTimeout(finish,1200);}}
+},100);
+}
+function nextRound(){round++;document.getElementById("round").textContent=round;document.getElementById("msg").textContent="";answered=false;genQ();startTimer();}
+function finish(){document.getElementById("options").innerHTML="";document.getElementById("question").textContent="Done!";document.getElementById("msg").textContent=`Final: ${score}/10 🎉`;document.getElementById("startBtn").style.display="inline-block";}
+document.getElementById("startBtn").addEventListener("click",()=>{
+score=0;round=0;document.getElementById("score").textContent=0;
+document.getElementById("startBtn").style.display="none";
+document.getElementById("msg").textContent="";
+nextRound();
+});
+document.getElementById("options").innerHTML="";
+</script>
+</body>
+</html>

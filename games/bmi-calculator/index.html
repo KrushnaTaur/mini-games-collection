@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI Calculator</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#43e97b,#38f9d7);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:380px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:20px;color:#333;}
+label{display:block;text-align:left;font-size:14px;color:#555;margin-bottom:5px;}
+input{width:100%;padding:11px;font-size:15px;border:1px solid #ccc;border-radius:8px;outline:none;margin-bottom:12px;}
+button{padding:12px;width:100%;border:none;border-radius:8px;font-size:16px;cursor:pointer;background:#43e97b;color:white;transition:0.2s;}
+button:hover{background:#2fc75e;}
+.result{margin-top:15px;padding:15px;border-radius:10px;display:none;}
+.bmi-val{font-size:36px;font-weight:bold;margin-bottom:6px;}
+.category{font-size:18px;font-weight:bold;margin-bottom:8px;}
+.scale{display:flex;border-radius:4px;overflow:hidden;height:10px;margin-top:10px;}
+.scale div{flex:1;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>⚖️ BMI Calculator</h1>
+<label>Weight (kg)</label>
+<input type="number" id="weight" placeholder="e.g. 70" min="1">
+<label>Height (cm)</label>
+<input type="number" id="height" placeholder="e.g. 175" min="1">
+<button id="calcBtn">Calculate BMI</button>
+<div class="result" id="result">
+<div class="bmi-val" id="bmiVal"></div>
+<div class="category" id="category"></div>
+<div style="font-size:13px;color:#888">BMI Scale</div>
+<div class="scale">
+<div style="background:#2196F3" title="Underweight (<18.5)"></div>
+<div style="background:#4CAF50" title="Normal (18.5-24.9)"></div>
+<div style="background:#FF9800" title="Overweight (25-29.9)"></div>
+<div style="background:#f44336" title="Obese (30+)"></div>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:11px;color:#999;margin-top:3px;">
+<span>Under</span><span>Normal</span><span>Over</span><span>Obese</span>
+</div>
+</div>
+</div>
+<script>
+document.getElementById("calcBtn").addEventListener("click",()=>{
+const w=+document.getElementById("weight").value;
+const h=+document.getElementById("height").value/100;
+if(!w||!h||w<=0||h<=0){alert("Enter valid weight and height!");return;}
+const bmi=(w/(h*h)).toFixed(1);
+let cat,color;
+if(bmi<18.5){cat="Underweight 🟦";color="#2196F3";}
+else if(bmi<25){cat="Normal Weight 🟩";color="#4CAF50";}
+else if(bmi<30){cat="Overweight 🟧";color="#FF9800";}
+else{cat="Obese 🟥";color="#f44336";}
+document.getElementById("bmiVal").textContent=bmi;
+document.getElementById("bmiVal").style.color=color;
+document.getElementById("category").textContent=cat;
+document.getElementById("category").style.color=color;
+document.getElementById("result").style.display="block";
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Mixer</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#667eea,#764ba2);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:420px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:20px;color:#333;}
+.sliders label{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;font-weight:bold;}
+input[type=range]{width:100%;height:8px;border-radius:4px;outline:none;margin-bottom:12px;}
+#rRange{accent-color:#e74c3c;}#gRange{accent-color:#2ecc71;}#bRange{accent-color:#3498db;}
+.preview{height:100px;border-radius:12px;margin:15px 0;transition:background 0.2s;border:1px solid #eee;}
+.info{display:flex;justify-content:space-around;font-size:14px;margin-bottom:12px;}
+.info div{background:#f4f4f4;padding:8px 12px;border-radius:8px;font-family:monospace;}
+button{padding:10px 20px;border:none;border-radius:8px;font-size:14px;cursor:pointer;background:#667eea;color:white;margin:4px;transition:0.2s;}
+button:hover{background:#5567cc;}
+.saved{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center;}
+.swatch{width:36px;height:36px;border-radius:8px;border:1px solid #ddd;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🎨 Color Mixer</h1>
+<div class="sliders">
+<label><span>Red</span><span id="rVal">128</span></label>
+<input type="range" id="rRange" min="0" max="255" value="128">
+<label><span>Green</span><span id="gVal">128</span></label>
+<input type="range" id="gRange" min="0" max="255" value="128">
+<label><span>Blue</span><span id="bVal">128</span></label>
+<input type="range" id="bRange" min="0" max="255" value="128">
+</div>
+<div class="preview" id="preview"></div>
+<div class="info">
+<div id="hexVal">#808080</div>
+<div id="rgbVal">rgb(128,128,128)</div>
+</div>
+<button onclick="save()">Save Color</button>
+<button onclick="random()">Random</button>
+<div class="saved" id="saved"></div>
+</div>
+<script>
+function toHex(n){return n.toString(16).padStart(2,"0");}
+function update(){
+const r=+document.getElementById("rRange").value;
+const g=+document.getElementById("gRange").value;
+const b=+document.getElementById("bRange").value;
+document.getElementById("rVal").textContent=r;
+document.getElementById("gVal").textContent=g;
+document.getElementById("bVal").textContent=b;
+const hex=`#${toHex(r)}${toHex(g)}${toHex(b)}`;
+document.getElementById("preview").style.background=`rgb(${r},${g},${b})`;
+document.getElementById("hexVal").textContent=hex.toUpperCase();
+document.getElementById("rgbVal").textContent=`rgb(${r},${g},${b})`;
+}
+["rRange","gRange","bRange"].forEach(id=>document.getElementById(id).addEventListener("input",update));
+function save(){
+const hex=document.getElementById("hexVal").textContent;
+const sw=document.createElement("div");sw.className="swatch";
+sw.style.background=hex;sw.title=hex;
+sw.onclick=()=>{navigator.clipboard.writeText(hex);};
+document.getElementById("saved").appendChild(sw);
+}
+function random(){
+document.getElementById("rRange").value=Math.floor(Math.random()*256);
+document.getElementById("gRange").value=Math.floor(Math.random()*256);
+document.getElementById("bRange").value=Math.floor(Math.random()*256);
+update();
+}
+update();
+</script>
+</body>
+</html>

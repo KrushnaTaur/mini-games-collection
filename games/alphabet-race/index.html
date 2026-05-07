@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alphabet Race</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#f953c6,#b91d73);}
+.card{background:white;padding:30px;border-radius:12px;width:90%;max-width:440px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+h1{margin-bottom:8px;color:#333;}
+.meta{font-size:15px;color:#888;margin-bottom:15px;}
+.meta span{color:#f953c6;font-weight:bold;}
+.target{font-size:64px;font-weight:bold;color:#f953c6;margin:10px 0;}
+.instruction{font-size:14px;color:#888;margin-bottom:15px;}
+.progress{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-bottom:15px;}
+.letter{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;background:#eee;color:#888;}
+.letter.done{background:#f953c6;color:white;}
+.letter.current{background:#b91d73;color:white;}
+button{padding:11px 28px;border:none;border-radius:8px;font-size:16px;cursor:pointer;background:#f953c6;color:white;transition:0.2s;}
+button:hover{background:#d4429e;}
+.result{margin-top:12px;font-size:17px;font-weight:bold;color:#f953c6;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🔤 Alphabet Race</h1>
+<div class="meta">Time: <span id="time">0.0</span>s | Best: <span id="best">--</span></div>
+<div class="target" id="target">A</div>
+<div class="instruction">Press each letter on your keyboard in order A→Z</div>
+<div class="progress" id="progress"></div>
+<button id="startBtn">Start</button>
+<div class="result" id="result"></div>
+</div>
+<script>
+const alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let cur=0,running=false,startTime,timer,best=null;
+function buildProgress(){
+const p=document.getElementById("progress");p.innerHTML="";
+alpha.split("").forEach((l,i)=>{
+const d=document.createElement("div");d.className="letter";d.id="l"+i;d.textContent=l;p.appendChild(d);
+});
+}
+function updateProgress(){
+alpha.split("").forEach((_,i)=>{
+const el=document.getElementById("l"+i);
+if(i<cur){el.className="letter done";}
+else if(i===cur){el.className="letter current";}
+else{el.className="letter";}
+});
+document.getElementById("target").textContent=cur<26?alpha[cur]:"✅";
+}
+function start(){
+cur=0;running=true;startTime=performance.now();
+document.getElementById("result").textContent="";
+document.getElementById("startBtn").style.display="none";
+updateProgress();
+timer=setInterval(()=>{
+document.getElementById("time").textContent=((performance.now()-startTime)/1000).toFixed(1);
+},100);
+}
+document.addEventListener("keydown",e=>{
+if(!running)return;
+if(e.key.toUpperCase()===alpha[cur]){
+cur++;updateProgress();
+if(cur===26){
+clearInterval(timer);running=false;
+const elapsed=((performance.now()-startTime)/1000).toFixed(2);
+document.getElementById("time").textContent=elapsed;
+if(!best||elapsed<best){best=elapsed;document.getElementById("best").textContent=best+"s";}
+document.getElementById("result").textContent=`Done in ${elapsed}s! 🎉`;
+document.getElementById("startBtn").style.display="inline-block";
+}
+}
+});
+document.getElementById("startBtn").addEventListener("click",start);
+buildProgress();
+</script>
+</body>
+</html>
